@@ -1,0 +1,38 @@
+<header>
+  <h1>Liste des Classes</h1>
+  <nav>
+    <a href="#">Accueil</a> / <a href="#">Classes list </a>
+  </nav>
+  <br>
+</header>
+<br>
+<div class="classes-container">
+
+
+  <!-- No classes available -->
+  <div *ngIf="classes.length === 0" class="no-classes-message">
+    <p>Aucune classe trouvée.</p>
+  </div>
+
+  <!-- List of classes -->
+  <div *ngIf="classes.length > 0" class="classes-list">
+    <div *ngFor="let class of classes" class="class-card">
+      <div class="class-card-header">
+        <h3>{{ class.name }}</h3>
+        <span class="class-level">{{ class.level }}</span>
+      </div>
+
+      <div class="class-card-body">
+        <p><strong>Nombre d'étudiants :</strong> {{ class.studentsCount }}</p>
+      </div>
+
+      <div class="class-card-footer">
+        <button (click)="onViewDetails(class.id)" class="details-button">Détails</button>
+        <button (click)="onDelete(class.id)" class="delete-button">Supprimer</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+<button [routerLink]="['/acceuil/classe']">Ajouter</button>

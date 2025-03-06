@@ -1,0 +1,63 @@
+<header>
+  <h1>Ajouter Classe</h1>
+  <nav>
+    <a href="#">Accueil</a> / <a href="#">Classes</a>
+  </nav>
+  <br>
+</header>
+<br>
+<div class="contact-page-container">
+  <div class="contact-form">
+    <form [formGroup]="classForm" (ngSubmit)="onSubmit()">
+      <!-- Success message -->
+      <div class="alert alert-primary" role="alert" *ngIf="message">
+        <div class="success-message">{{ message }}</div>
+      </div>
+
+      <!-- Error message -->
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        <div class="error-message">{{ error }}</div>
+      </div>
+
+      <!-- Class Name -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Nom de la classe</mat-label>
+          <input matInput formControlName="name" placeholder="Entrer le nom de la classe">
+          <mat-error *ngIf="classForm.get('name')?.errors?.['required']">Le nom est requis</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Class Level -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Niveau</mat-label>
+          <input matInput formControlName="level" placeholder="Entrer le niveau de la classe">
+          <mat-error *ngIf="classForm.get('level')?.errors?.['required']">Le niveau est requis</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- User Selection -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Choisir les étudiants</mat-label>
+          <mat-select formControlName="selectedUsers" (selectionChange)="onUserSelection($event)" multiple>
+            <mat-option *ngFor="let user of users" [value]="user.id">{{ user.lastname }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="classForm.get('selectedUsers')?.errors?.['required']">Au moins un étudiant est requis</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- Students Count (auto-updated) -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Nombre d'étudiants</mat-label>
+          <input matInput formControlName="studentsCount" placeholder="Nombre d'étudiants" [readonly]="true">
+        </mat-form-field>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" pButton label="Ajouter" [disabled]="!classForm.valid">Ajouter</button>
+    </form>
+  </div>
+</div>

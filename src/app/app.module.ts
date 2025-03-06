@@ -3,14 +3,62 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClassesComponent } from './classes/classes.component';
+import { ListeclassesComponent } from './listeclasses/listeclasses.component';
+import { ClassedetailsComponent } from './classedetails/classedetails.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatButtonModule} from "@angular/material/button";
+import {MatInputModule} from "@angular/material/input";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatCardModule} from "@angular/material/card";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatTableModule} from "@angular/material/table";
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderfooterComponent } from './headerfooter/headerfooter.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ClassesComponent,
+    ListeclassesComponent,
+    ClassedetailsComponent,
+    HeaderComponent,
+    FooterComponent,
+    HeaderfooterComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+
+    MatSlideToggleModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

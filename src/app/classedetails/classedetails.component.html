@@ -1,0 +1,21 @@
+<div class="class-details-container" *ngIf="class; else loading">
+  <h2>Details de la classe: {{ class.name }}</h2>
+
+  <div class="class-info">
+    <p><strong>Nom de la classe:</strong> {{ class.name }}</p>
+    <p><strong>Niveau:</strong> {{ class.level }}</p>
+    <p><strong>Nombre d'étudiants:</strong> {{ class.studentsCount }}</p>
+    <p><strong>Étudiants:</strong></p>
+    <ul>
+      <li *ngFor="let user of class.students">{{ user.firstname }} {{ user.lastname }} ({{ user.username }})</li>
+    </ul>
+  </div>
+
+  <!-- Button to go back to the list of classes -->
+  <button [routerLink]="['/acceuil/classeslist']">Retour à la liste des classes</button>
+
+</div>
+
+<ng-template #loading>
+  <p>Chargement des détails de la classe...</p>
+</ng-template>
