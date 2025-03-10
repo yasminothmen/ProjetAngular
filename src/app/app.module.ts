@@ -26,6 +26,11 @@ import {MatTableModule} from "@angular/material/table";
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderfooterComponent } from './headerfooter/headerfooter.component';
+import { ElevesComponent } from './eleves/eleves.component';
+import { ListelevesComponent } from './listeleves/listeleves.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatiereComponent } from './matieres/matieres.component';
+import { ListematieresComponent } from './listematieres/listematieres.component';
 
 @NgModule({
   declarations: [
@@ -35,16 +40,19 @@ import { HeaderfooterComponent } from './headerfooter/headerfooter.component';
     ClassedetailsComponent,
     HeaderComponent,
     FooterComponent,
-    HeaderfooterComponent
-  ],
+    HeaderfooterComponent,
+    ElevesComponent,
+    ListelevesComponent,
+    MatiereComponent,
+    ListematieresComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule,
+    HttpClientModule,// ne5ou bih les api mil back
     ReactiveFormsModule,
-
+    MatIconModule,
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,

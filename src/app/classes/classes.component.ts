@@ -63,6 +63,8 @@ export class ClassesComponent  implements OnInit{
   }
 
   onSubmit(): void {
+    console.log("📌 Bouton Ajouter cliqué !");
+
     if (this.classForm.valid) {
       this.classe = this.classForm.value;
       this.classe.students = this.users.filter(user => this.selectedUsers.includes(user.id));

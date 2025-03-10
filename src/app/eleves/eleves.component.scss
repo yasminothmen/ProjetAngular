@@ -11,33 +11,31 @@ body {
   background-color: #007bff;
 }
 
-
 /* Style pour le bouton "Voir liste des classes" */
 .btn-see-list {
-  background-color: #392c7c; /* Couleur de fond (vert) */
-  color: white;
-  padding: 12px 20px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  text-align: center;
-  display: inline-block;
+background-color: #392c7c; /* Couleur de fond (vert) */
+color: white;
+padding: 12px 20px;
+border-radius: 5px;
+border: none;
+font-size: 16px;
+cursor: pointer;
+transition: background-color 0.3s ease, transform 0.2s ease;
+text-align: center;
+display: inline-block;
 }
 
 /* Changer la couleur de fond au survol */
 .btn-see-list:hover {
-  background-color: #392c7c; /* Couleur plus foncée au survol */
-  transform: translateY(-2px); /* Légère élévation au survol */
+background-color: #392c7c; /* Couleur plus foncée au survol */
+transform: translateY(-2px); /* Légère élévation au survol */
 }
 
 /* Désactivation du bouton */
 .btn-see-list:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+background-color: #cccccc;
+cursor: not-allowed;
 }
-
 
 .contact-page-container {
   display: flex;

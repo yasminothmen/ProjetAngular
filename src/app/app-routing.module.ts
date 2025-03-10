@@ -4,19 +4,30 @@ import {ClassesComponent} from "./classes/classes.component";
 import {ListeclassesComponent} from "./listeclasses/listeclasses.component";
 import {ClassedetailsComponent} from "./classedetails/classedetails.component";
 import {HeaderfooterComponent} from "./headerfooter/headerfooter.component";
+import { ElevesComponent } from './eleves/eleves.component';
+import { ListelevesComponent } from './listeleves/listeleves.component';
+import { MatiereComponent } from './matieres/matieres.component';
+import { ListematieresComponent } from './listematieres/listematieres.component'; // Assurez-vous du bon chemin
 
 const routes: Routes = [
   { path:'acceuil',
     component : HeaderfooterComponent,
     children:[
-      {path:'classe', component:ClassesComponent
-      },
+      {path:'classe', component:ClassesComponent},
       {path:'classeslist',component:ListeclassesComponent},
       {path:'classe/:id',component:ClassedetailsComponent},
+            //******************* */
+      {path:'eleves',component:ElevesComponent},
+      {path:'elevesList',component:ListelevesComponent},
+      /************************** */
+      {path:'matieres',component:MatiereComponent},
+      {path:'listematieres',component:ListematieresComponent},
+
+      
     ]},
 
-  {path:'',redirectTo:'/classeslist',pathMatch:'full'}
-];
+    { path: '', redirectTo: '/acceuil/classeslist', pathMatch: 'full' }
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
