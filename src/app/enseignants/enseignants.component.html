@@ -1,0 +1,82 @@
+<header>
+  <h1>Ajouter un Enseignant</h1>
+  <nav>
+    <a href="#">Accueil</a> / <a href="#">Enseignants</a>
+  </nav>
+  <br>
+</header>
+<br>
+<div class="container">
+  <button routerLink="/acceuil/listeenseignants" class="btn-see-list">Voir liste des enseignants</button>
+</div>
+
+
+<div class="contact-page-container">
+  <div class="contact-form">
+    <form [formGroup]="enseignantForm" (ngSubmit)="onSubmit()">
+  
+      <!-- Message de succès -->
+      <div class="alert alert-primary" role="alert" *ngIf="message">
+        <div class="success-message">{{ message }}</div>
+      </div>
+  
+      <!-- Message d'erreur -->
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        <div class="error-message">{{ error }}</div>
+      </div>
+  
+      <!-- Prénom de l'enseignant -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Prénom de l'enseignant</mat-label>
+          <input matInput formControlName="firstname" placeholder="Entrer le prénom de l'enseignant">
+          <mat-error *ngIf="enseignantForm.get('firstname')?.errors?.['required']">Le prénom est requis</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Nom de l'enseignant -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Nom de l'enseignant</mat-label>
+          <input matInput formControlName="lastname" placeholder="Entrer le nom de l'enseignant">
+          <mat-error *ngIf="enseignantForm.get('lastname')?.errors?.['required']">Le nom est requis</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Email de l'enseignant -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Email de l'enseignant</mat-label>
+          <input matInput formControlName="email" placeholder="Entrer l'e-mail de l'enseignant">
+          <mat-error *ngIf="enseignantForm.get('email')?.errors?.['required']">L'email est requis</mat-error>
+          <mat-error *ngIf="enseignantForm.get('email')?.errors?.['email']">L'email doit être valide</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Matière enseignée -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Choisir les matières enseignées</mat-label>
+          <mat-select formControlName="matieresEnseignees" (selectionChange)="onSubjectSelection($event)" multiple>
+            <mat-option *ngFor="let subject of matieres" [value]="subject.name">{{ subject.name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="enseignantForm.get('matieresEnseignees')?.errors?.['required']">
+            Au moins une matière est requise
+          </mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Mot de passe de l'enseignant -->
+      <div>
+        <mat-form-field class="custom-input-width">
+          <mat-label>Mot de passe de l'enseignant</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Entrer le mot de passe de l'enseignant">
+          <mat-error *ngIf="enseignantForm.get('password')?.errors?.['required']">Le mot de passe est requis</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn-see-list" [disabled]="!enseignantForm.valid">Ajouter</button>
+    </form>
+  </div>
+</div>

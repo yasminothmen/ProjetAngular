@@ -12,6 +12,11 @@ body {
 }
 
 
+.container {
+  display: flex;
+  justify-content: center;
+}
+
 /* Style pour le bouton "Voir liste des classes" */
 .btn-see-list {
   background-color: #392c7c; /* Couleur de fond (vert) */

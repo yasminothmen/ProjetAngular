@@ -42,7 +42,7 @@ export class ElevesComponent implements OnInit {
   }
 
   loadUsers(): void {
-    this.userService.getAllUsers().subscribe({
+    this.userService.getStudents().subscribe({
       next: (users) => {
         this.users = users;
       },
@@ -59,7 +59,7 @@ export class ElevesComponent implements OnInit {
       //******************** */
       console.log("Données envoyées :", this.eleve);
       // Appel au service pour ajouter un utilisateur
-      this.userService.addUser(this.eleve).subscribe({
+      this.userService.addStudent(this.eleve).subscribe({
         next: () => {
           this.message = 'L\'élève a été ajouté avec succès !';
           this.error = '';

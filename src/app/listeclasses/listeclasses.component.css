@@ -13,7 +13,24 @@ h2 {
   color: #777;
   font-size: 18px;
 }
+.container {
+  display: flex;
+  justify-content: center;
+}
 
+/* Style pour le bouton "Voir liste des classes" */
+.btn-see-list {
+  background-color: #392c7c; /* Couleur de fond (vert) */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  display: inline-block;
+}
 .classes-list {
   display: flex;
   flex-wrap: wrap;

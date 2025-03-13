@@ -23,4 +23,8 @@ export class ClassesService {
   getClassById(id : string){
     return this.http.get<Class>(`${this.apiUrl}/${id}`)
   }
+  getClassByName(name: string) {
+    return this.http.get<Class[]>(`${this.apiUrl}/name/${name}`);
+  }
+  
 }

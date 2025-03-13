@@ -6,6 +6,8 @@ export class User {
   password: string;
   confirmPassword: string;
   username: string;
+  role: string; // Ajout du rôle
+
 
   constructor() {
     this.id = '';
@@ -15,5 +17,7 @@ export class User {
     this.password = '';
     this.confirmPassword = '';
     this.username = '';
+    this.role = ''; // Initialisation du rôle
+
   }
 }

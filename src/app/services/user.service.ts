@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
+import { Teacher } from '../models/teacher'; // Importer Teacher
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -17,9 +18,29 @@ export class UserService {
     return this.http.get<User[]>(this.apiUrl);
   }
 
+  // Récupérer les étudiants
+  getStudents(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/students`);
+  }
+
+  // Récupérer les enseignants
+  getTeachers(): Observable<Teacher[]> {  // Retourner un tableau de Teacher
+    return this.http.get<Teacher[]>(`${this.apiUrl}/teachers`);
+  }
+
   // Ajouter un utilisateur
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, user);
+  }
+
+  // Ajouter un étudiant
+  addStudent(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/add-student`, user);
+  }
+
+  // Ajouter un enseignant
+  addTeacher(user: User): Observable<User> {
+    return this.http.post<User>(`${this.apiUrl}/add-teacher`, user);
   }
 
   // Supprimer un utilisateur par ID
@@ -31,16 +52,6 @@ export class UserService {
   addListUsers(users: User[]): Observable<User[]> {
     return this.http.post<User[]>(`${this.apiUrl}/List`, users);
   }
-
-  // Ajouter un utilisateur avec vérification du mot de passe
-  // addUserWithPasswordCheck(user: User): Observable<string> {
-  //   return this.http.post<string>(`${this.apiUrl}/with-password-check`, user);
-  // }
-
-  // Ajouter un utilisateur avec vérification du nom d'utilisateur
-  // addUserWithUsernameCheck(user: User): Observable<string> {
-  //   return this.http.post<string>(`${this.apiUrl}/with-username-check`, user);
-  // }
 
   // Mettre à jour un utilisateur par ID
   updateUser(id: string, user: User): Observable<User> {

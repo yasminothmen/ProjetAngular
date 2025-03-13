@@ -8,6 +8,8 @@ import { ElevesComponent } from './eleves/eleves.component';
 import { ListelevesComponent } from './listeleves/listeleves.component';
 import { MatiereComponent } from './matieres/matieres.component';
 import { ListematieresComponent } from './listematieres/listematieres.component'; // Assurez-vous du bon chemin
+import { EnseignantsComponent } from './enseignants/enseignants.component';
+import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.component';
 
 const routes: Routes = [
   { path:'acceuil',
@@ -23,6 +25,10 @@ const routes: Routes = [
       {path:'matieres',component:MatiereComponent},
       {path:'listematieres',component:ListematieresComponent},
 
+      //**************************************** */
+      { path: 'enseignants', component: EnseignantsComponent },
+      { path: 'listeenseignants',component:ListeenseignantsComponent}
+
       
     ]},
 
@@ -33,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

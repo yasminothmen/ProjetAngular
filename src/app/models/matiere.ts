@@ -1,15 +1,17 @@
 export class Matiere {
     id: string;
     name: string;
-    //levels: string[];
     type: string;
-    classesIds: string[];  // ✅ Utilise bien un tableau d'IDs
+    
+    nombreHeures: string;
+    level:string[];
 
     constructor() {
         this.id = '';
         this.name = '';
-        //this.levels = [];
         this.type = '';
-        this.classesIds = [];  // ✅ Initialisation correcte
+        
+        this.nombreHeures = '';
+        this.level = [];
     }
 }

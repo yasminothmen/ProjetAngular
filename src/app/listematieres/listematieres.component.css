@@ -1,4 +1,4 @@
-.classes-container {
+.matieres-container {
     padding: 20px;
     text-align: center;
   }
@@ -9,19 +9,26 @@
     margin-bottom: 20px;
   }
   
-  .no-classes-message p {
+  .no-matieres-message p {
     color: #777;
     font-size: 18px;
   }
   
-  .classes-list {
+
+  .container {
+    display: flex;
+    justify-content: center;
+  }
+
+  
+  .matieres-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
   }
   
-  .class-card {
+  .matiere-card {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -31,34 +38,34 @@
     transition: transform 0.3s ease-in-out;
   }
   
-  .class-card:hover {
+  .matiere-card:hover {
     transform: translateY(-10px);
   }
   
-  .class-card-header {
+  .matiere-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
   }
   
-  .class-card-header h3 {
+  .matiere-card-header h3 {
     font-size: 20px;
     color: #392c7c;
   }
   
-  .class-level {
+  .nombre-heures {
     background-color: #392c7c;
     color: #fff;
     padding: 5px 15px;
     border-radius: 25px;
   }
   
-  .class-card-body {
+  .matiere-card-body {
     margin-bottom: 15px;
   }
   
-  .class-card-footer {
+  .matiere-card-footer {
     display: flex;
     justify-content: space-between;
   }

@@ -30,7 +30,7 @@ export class ListelevesComponent implements OnInit {
   }
 
   loadEleves() {
-    this.userservice.getAllUsers().subscribe((data: User[]) => {
+    this.userservice.getStudents().subscribe((data: User[]) => {
       this.dataSource.data = data;
     });
   }

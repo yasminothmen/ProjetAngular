@@ -6,29 +6,34 @@
   <br>
 </header>
 <br>
-<button [routerLink]="['/acceuil/matieres']">Ajouter une matière</button>
-
+<div class="container">
+<button [routerLink]="['/acceuil/matieres']" >Ajouter une matière</button>
+</div>
 <div class="matieres-container">
   <!-- No matieres available -->
   <div *ngIf="matieres.length === 0" class="no-matieres-message">
     <p>Aucune matière trouvée.</p>
   </div>
 
+
   <!-- List of matieres -->
   <div *ngIf="matieres.length > 0" class="matieres-list">
     <div *ngFor="let matiere of matieres" class="matiere-card">
       <div class="matiere-card-header">
         <h3>{{ matiere.name }}</h3>
-        <span class="matiere-level">{{ matiere.classesIds }}</span>
+        <span class="nombre-heures">{{ matiere.nombreHeures }}</span>
+
       </div>
+     
 
       <div class="matiere-card-body">
-        <!-- Supprimer cette ligne si tu ne veux pas afficher le nombre d'enseignants -->
-        <!-- <p><strong>Nombre d'enseignants :</strong> {{ matiere.teachersCount }}</p> -->
+        <p><strong>Niveau:</strong> {{ matiere.level }}</p>
+        <p><strong>Type:</strong> {{ matiere.type }}</p> <!-- Affichage du type de matière -->
+
       </div>
 
       <div class="matiere-card-footer">
-        <button (click)="onViewDetails(matiere.id)" class="details-button">Détails</button>
+        <!-- <button (click)="onViewDetails(matiere.id)" class="details-button">Détails</button> -->
         <button (click)="onDelete(matiere.id)" class="delete-button">Supprimer</button>
       </div>
     </div>

@@ -31,6 +31,8 @@ import { ListelevesComponent } from './listeleves/listeleves.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatiereComponent } from './matieres/matieres.component';
 import { ListematieresComponent } from './listematieres/listematieres.component';
+import { EnseignantsComponent } from './enseignants/enseignants.component';
+import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,10 @@ import { ListematieresComponent } from './listematieres/listematieres.component'
     ElevesComponent,
     ListelevesComponent,
     MatiereComponent,
-    ListematieresComponent  ],
+    ListematieresComponent,
+    EnseignantsComponent,
+    ListeenseignantsComponent,
+     ],
   imports: [
     BrowserModule,
     AppRoutingModule,
