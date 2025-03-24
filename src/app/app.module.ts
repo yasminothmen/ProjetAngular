@@ -33,6 +33,11 @@ import { MatiereComponent } from './matieres/matieres.component';
 import { ListematieresComponent } from './listematieres/listematieres.component';
 import { EnseignantsComponent } from './enseignants/enseignants.component';
 import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.component';
+import { TeacherEditModalComponent } from './teacher-edit-modal/teacher-edit-modal.component';
+import { EmploiComponent } from './emploi/emploi.component';
+import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
+import { EmploiAffichageComponent } from './affiche-emploi/affiche-emploi.component';
+
 
 @NgModule({
   declarations: [
@@ -49,6 +54,9 @@ import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.c
     ListematieresComponent,
     EnseignantsComponent,
     ListeenseignantsComponent,
+    TeacherEditModalComponent,
+    EmploiComponent,
+    EmploiAffichageComponent
      ],
   imports: [
     BrowserModule,
@@ -72,6 +80,7 @@ import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.c
     MatPaginatorModule,
     MatDialogModule,
     MatTableModule,
+    ScheduleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,32 @@
+<div class="schedule-container" *ngIf="scheduleData">
+    <div class="schedule-header">
+      <h2>Emploi du temps - {{scheduleData.className}} ({{scheduleData.level}})</h2>
+    </div>
+  
+    <div class="schedule-grid">
+      <!-- Empty top-left corner -->
+      <div class="grid-header"></div>
+      
+      <!-- Time headers -->
+      <div *ngFor="let time of timeSlots" class="time-header">
+        {{time}}
+      </div>
+      
+      <!-- Days and sessions -->
+      <div *ngFor="let day of days" class="day-row">
+        <div class="day-header">{{day}}</div>
+        
+        <div *ngFor="let time of timeSlots" class="session-cell" 
+             [style.backgroundColor]="getSubjectColor(getSession(day, time)?.subject)">
+          <div *ngIf="getSession(day, time) as session" class="session-content">
+            <div class="subject">{{session.subject}}</div>
+            <div class="teacher">{{session.teacher}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="!scheduleData" class="no-schedule">
+    Aucun emploi du temps disponible
+  </div>

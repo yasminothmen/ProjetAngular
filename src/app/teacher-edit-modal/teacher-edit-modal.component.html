@@ -1,0 +1,26 @@
+<!-- teacher-edit-modal.component.html -->
+<h2>Modifier l'enseignant</h2>
+<form [formGroup]="editTeacherForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Prénom</mat-label>
+    <input matInput formControlName="firstname" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Nom</mat-label>
+    <input matInput formControlName="lastname" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" required>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Matières enseignées</mat-label>
+    <input matInput formControlName="matieresEnseignees" required>
+  </mat-form-field>
+
+  <button type="submit" [disabled]="editTeacherForm.invalid" class="btn-enregistrer">Enregistrer</button>
+  <button mat-raised-button color="warn" type="button" (click)="cancelEdit()">Annuler</button>
+</form>

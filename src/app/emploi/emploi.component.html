@@ -1,0 +1,77 @@
+<header>
+  <h1>Créer votre emploi du temps</h1>
+  <nav>
+    <a href="#">Accueil</a> / <a href="#">Emploi</a>
+  </nav>
+</header>
+
+<form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
+  <!-- Sélecteur de classe -->
+  <mat-form-field appearance="fill">
+    <mat-label>Classe</mat-label>
+    <mat-select formControlName="selectedClass" (selectionChange)="onClassSelection($event)">
+      <mat-option *ngFor="let class of classes" [value]="class">
+        {{class.name}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="scheduleForm.get('selectedClass')?.invalid">Classe requise</mat-error>
+  </mat-form-field>
+
+  <!-- Niveau (auto-rempli) -->
+  <mat-form-field appearance="fill">
+    <mat-label>Niveau</mat-label>
+    <input matInput formControlName="level" readonly>
+  </mat-form-field>
+
+  <!-- Sessions -->
+  <div formArrayName="sessions" class="sessions-container">
+    <div *ngFor="let session of sessions.controls; let i = index" [formGroupName]="i" class="session-item">
+      <h3>Séance {{i + 1}}</h3>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Jour</mat-label>
+        <mat-select formControlName="day">
+          <mat-option *ngFor="let day of days" [value]="day">{{day}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Horaire</mat-label>
+        <mat-select formControlName="time">
+          <mat-option *ngFor="let time of timeOptions" [value]="time">{{time}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Enseignant</mat-label>
+        <mat-select formControlName="teacher">
+          <mat-option *ngFor="let teacher of teachers" [value]="teacher.lastname + ' ' + teacher.firstname">
+            {{teacher.lastname}} {{teacher.firstname}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Matière</mat-label>
+        <mat-select formControlName="subject">
+          <mat-option *ngFor="let matiere of matieres" [value]="matiere.name">
+            {{matiere.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-icon-button color="warn" (click)="removeSession(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="action-buttons">
+    <button mat-raised-button color="primary" type="button" (click)="createSchedule()">
+      <mat-icon>add</mat-icon> Ajouter séance
+    </button>
+    <button mat-raised-button color="accent" type="submit" [disabled]="scheduleForm.invalid">
+      <mat-icon>save</mat-icon> Enregistrer
+    </button>
+  </div>
+</form>

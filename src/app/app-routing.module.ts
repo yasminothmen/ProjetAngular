@@ -10,6 +10,8 @@ import { MatiereComponent } from './matieres/matieres.component';
 import { ListematieresComponent } from './listematieres/listematieres.component'; // Assurez-vous du bon chemin
 import { EnseignantsComponent } from './enseignants/enseignants.component';
 import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.component';
+import { EmploiComponent } from './emploi/emploi.component';
+import { EmploiAffichageComponent } from './affiche-emploi/affiche-emploi.component';
 
 const routes: Routes = [
   { path:'acceuil',
@@ -27,7 +29,11 @@ const routes: Routes = [
 
       //**************************************** */
       { path: 'enseignants', component: EnseignantsComponent },
-      { path: 'listeenseignants',component:ListeenseignantsComponent}
+      { path: 'listeenseignants',component:ListeenseignantsComponent},
+
+      // ********************************************
+      { path: 'emploie', component: EmploiComponent },
+      { path: 'afficheEmploie', component: EmploiAffichageComponent },
 
       
     ]},

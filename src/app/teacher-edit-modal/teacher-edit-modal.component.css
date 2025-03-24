@@ -1,0 +1,85 @@
+/* Modal Container */
+h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  /* Form Styling */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Input Fields */
+  mat-form-field {
+    width: 100%;
+  }
+  
+  mat-label {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Buttons */
+  .btn-enregistrer {
+    background-color: #392c7c;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .btn-enregistrer:hover {
+    background-color: #392c7c;
+  }
+  
+  mat-raised-button[color="warn"] {
+    background-color: #f44336;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  mat-raised-button[color="warn"]:hover {
+    background-color: #d32f2f;
+  }
+  
+  /* Centering the Form in Modal */
+  .mat-dialog-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+  }
+  
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+  
+  .mat-dialog-container {
+    width: 400px;
+    max-width: 100%;
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 600px) {
+    .mat-dialog-container {
+      width: 100%;
+    }
+  }
+  
