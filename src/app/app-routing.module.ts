@@ -12,6 +12,10 @@ import { EnseignantsComponent } from './enseignants/enseignants.component';
 import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.component';
 import { EmploiComponent } from './emploi/emploi.component';
 import { EmploiAffichageComponent } from './affiche-emploi/affiche-emploi.component';
+import { LoginComponent } from './login/login.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { authenticatedGuard, notAuthenticatedGuard, verifyEmailGuard } from './guards/authenticated.guard';
 
 const routes: Routes = [
   { path:'acceuil',
@@ -35,7 +39,11 @@ const routes: Routes = [
       { path: 'emploie', component: EmploiComponent },
       { path: 'afficheEmploie', component: EmploiAffichageComponent },
 
-      
+      // ***********************************************/
+      {path: 'login', component : LoginComponent, canActivate: [notAuthenticatedGuard]},
+      {path: 'verify-email', component : VerifyEmailComponent, canActivate: [verifyEmailGuard]},
+   
+      { path: 'dashboard', component: DashboardComponent, canActivate: [authenticatedGuard]},
     ]},
 
     { path: '', redirectTo: '/acceuil/classeslist', pathMatch: 'full' }

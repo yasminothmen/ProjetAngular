@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa; /* Changement de couleur pour correspondre au fond clair */
+  }
+  
+  header {
+    min-width: 100%;
+    text-align: center;
+    padding: 20px;
+    background-color: #d00707;
+    color: white;
+    max-height: 120px;
+  }
+  
+  header nav {
+    margin-top: 10px;
+  }
+  
+  header nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+  }
+  
+  header h1 {
+
+    color: white;
+  }
+  
+  
+  .filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  .filter-input {
+    flex: 0 1 300px; /* Taille fixe pour le champ de filtre */
+  }
+  
+  button[routerLink] {
+    background-color: #392c7c;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button[routerLink]:hover {
+    background-color: #2c1a6c;
+  }
+  
+  .mat-elevation-z8 {
+    width: 80%; /* Taille du tableau ajustée */
+    max-width: 1000px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .mat-header-cell, .mat-cell {
+    text-align: left;
+  }
+  
+  .mat-row {
+    background-color: white;
+  }
+  
+  .mat-row:hover {
+    background-color: #f7f7f7;
+  }
+  
+  .mat-row td {
+    padding: 12px;
+  }
+  
+  .mat-header-row {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .mat-header-cell {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Affichage des icônes d'action dans le tableau */
+  button.mat-icon-button {
+    margin: 0 5px;
+  }
+  
+  /* Aucune donnée */
+  .mat-no-data-row td {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #888;
+  }
+  
+  @media (max-width: 768px) {
+    .filter-container {
+      flex-direction: column;
+    }
+  
+    .filter-input, button[routerLink] {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+  
+    .mat-elevation-z8 {
+      width: 100%;
+      padding: 15px;
+    }
+    .form {
+      display: block;
+      max-width: 600px; /* Limite de la largeur du formulaire */
+      margin: 0 auto; /* Centrer horizontalement */
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .form mat-form-field {
+      width: 100%;
+      margin-bottom: 16px; /* Espacement entre les champs */
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #392c7c;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #2c1a6c;
+    }
+   /* Styles pour le bouton Enregistrer */
+button.btn-enregistrer {
+  background-color: #007bff; /* Couleur primaire (bleu) */
+  color: white; /* Texte blanc */
+  padding: 12px 24px; /* Espacement interne du bouton */
+  font-size: 16px; /* Taille de la police */
+  border-radius: 6px; /* Coins arrondis */
+  font-weight: bold; /* Texte en gras */
+  cursor: pointer; /* Curseur pointer pour indiquer qu'il est cliquable */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transition pour le hover */
+  border: none; /* Enlève les bordures par défaut */
+  display: inline-block; /* Assure un bon alignement avec d'autres éléments */
+}
+
+/* Effet au survol (hover) */
+button.btn-enregistrer:hover {
+  background-color: #0056b3; /* Couleur plus foncée lorsqu'on survole le bouton */
+  transform: scale(1.05); /* Légère augmentation de la taille du bouton */
+}
+
+/* Style pour le bouton lorsqu'il est désactivé */
+button.btn-enregistrer:disabled {
+  background-color: #c0c0c0; /* Couleur gris clair quand le bouton est désactivé */
+  cursor: not-allowed; /* Curseur de "non autorisé" */
+}
+
+/* Optionnel: vous pouvez également ajouter un style pour le focus si vous le souhaitez */
+button.btn-enregistrer:focus {
+  outline: none; /* Supprime le contour par défaut */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ajoute une ombre bleue autour du bouton au focus */
+}
+
+    
+  }
+  

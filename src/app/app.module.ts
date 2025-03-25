@@ -37,7 +37,13 @@ import { TeacherEditModalComponent } from './teacher-edit-modal/teacher-edit-mod
 import { EmploiComponent } from './emploi/emploi.component';
 import { ScheduleModule } from '@syncfusion/ej2-angular-schedule';
 import { EmploiAffichageComponent } from './affiche-emploi/affiche-emploi.component';
-
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { LoginComponent } from './login/login.component';
+import { provideAuth } from '@angular/fire/auth';
+import { getAuth } from 'firebase/auth';
+import { AngularFireModule } from '@angular/fire/compat'
+import { environment } from './environments/environment';
 
 @NgModule({
   declarations: [
@@ -56,7 +62,10 @@ import { EmploiAffichageComponent } from './affiche-emploi/affiche-emploi.compon
     ListeenseignantsComponent,
     TeacherEditModalComponent,
     EmploiComponent,
-    EmploiAffichageComponent
+    EmploiAffichageComponent,
+    DashboardComponent,
+    VerifyEmailComponent,
+    LoginComponent
      ],
   imports: [
     BrowserModule,
@@ -80,7 +89,9 @@ import { EmploiAffichageComponent } from './affiche-emploi/affiche-emploi.compon
     MatPaginatorModule,
     MatDialogModule,
     MatTableModule,
-    ScheduleModule
+    ScheduleModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+
   ],
   providers: [],
   bootstrap: [AppComponent]
