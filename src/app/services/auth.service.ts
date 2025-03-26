@@ -23,7 +23,7 @@ export class AuthService {
 
     }, err => {
         alert(err.message);
-        this.router.navigate(['acceuil/login']);
+        this.router.navigate(['login']);
     })
   }
 
@@ -32,7 +32,7 @@ export class AuthService {
     this.fireauth.createUserWithEmailAndPassword(email, password).then( res => {
       alert('Registration Successful');
       this.sendEmailForVarification(res.user);
-      this.router.navigate(['acceuil/login']);
+      this.router.navigate(['login']);
     }, err => {
       alert(err.message);
       this.router.navigate(['acceuil/register']);

@@ -17,6 +17,7 @@ export class UserService {
   getAllUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);
   }
+  
 
   // Récupérer les étudiants
   getStudents(): Observable<User[]> {

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  logout(event: Event) {
+    event.stopPropagation(); // Empêche l'ouverture du dropdown
+    this.authService.logout().then(() => {
+      this.router.navigate(['/login']);
+    });
+  }
 
 }

@@ -40,13 +40,14 @@ const routes: Routes = [
       { path: 'afficheEmploie', component: EmploiAffichageComponent },
 
       // ***********************************************/
-      {path: 'login', component : LoginComponent, canActivate: [notAuthenticatedGuard]},
-      {path: 'verify-email', component : VerifyEmailComponent, canActivate: [verifyEmailGuard]},
-   
+      
       { path: 'dashboard', component: DashboardComponent, canActivate: [authenticatedGuard]},
     ]},
 
-    { path: '', redirectTo: '/acceuil/classeslist', pathMatch: 'full' }
+    { path: '', redirectTo: '/acceuil/classeslist', pathMatch: 'full' },
+    {path: 'login', component : LoginComponent, canActivate: [notAuthenticatedGuard]},
+    {path: 'verify-email', component : VerifyEmailComponent, canActivate: [verifyEmailGuard]},
+   
   ];
 
 @NgModule({

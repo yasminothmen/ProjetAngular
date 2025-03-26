@@ -1,0 +1,191 @@
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: #0a192f; /* Bleu marine foncé */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Animation de fond bleu subtile */
+  .login-container::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(10, 50, 100, 0.8) 0%, transparent 25%),
+      radial-gradient(circle at 70% 70%, rgba(20, 80, 120, 0.6) 0%, transparent 25%);
+    animation: bg-move 60s linear infinite;
+    z-index: 0;
+  }
+  
+  @keyframes bg-move {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 440px;
+    background: #172a45; /* Bleu marine moyen */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    border: 1px solid #1e3a8a;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  }
+  
+  .card-header {
+    padding: 2.5rem;
+    text-align: center;
+    background: #1a365d; /* Bleu légèrement plus clair */
+    color: white;
+    border-bottom: 1px solid #1e3a8a;
+    position: relative;
+  }
+  
+  .card-header::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    animation: headerGlow 3s ease infinite;
+  }
+  
+  @keyframes headerGlow {
+    0% { opacity: 0.3; transform: scaleX(0.5); }
+    50% { opacity: 0.8; transform: scaleX(1); }
+    100% { opacity: 0.3; transform: scaleX(0.5); }
+  }
+  
+  .card-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #f8fafc;
+  }
+  
+  .card-header p {
+    margin: 0.8rem 0 0;
+    font-size: 1rem;
+    opacity: 0.8;
+    font-weight: 300;
+    color: #e2e8f0;
+  }
+  
+  .login-form {
+    padding: 2.5rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.8rem;
+    position: relative;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #f8fafc;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #1e3a8a;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: white;
+    background: #1e3a8a;
+    transition: all 0.3s ease;
+  }
+  
+  .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 1.1rem;
+    background: #1d4ed8; /* Bleu foncé */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .login-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+  }
+  
+  .login-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: 0.5s;
+  }
+  
+  .login-btn:hover::before {
+    left: 100%;
+  }
+  
+  .forgot-password {
+    display: block;
+    text-align: right;
+    margin-top: -1rem;
+    margin-bottom: 1.5rem;
+    color: #93c5fd;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  
+  .forgot-password:hover {
+    color: #3b82f6;
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 480px) {
+    .login-card {
+        margin: 0 1.5rem;
+        border-radius: 10px;
+    }
+    
+    .card-header, .login-form {
+        padding: 2rem;
+    }
+  }
