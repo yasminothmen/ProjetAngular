@@ -1,68 +1,68 @@
-<header>
-  <h1>Ajouter un Élève</h1>
-  <nav>
-    <a href="#">Accueil</a> / <a href="#">Elèves</a>
-  </nav>
-  <br>
+<div class="class-container">
+  <header>
+    <h1>Ajouter un Élève</h1>
+    <nav>
+      <a href="#">Accueil</a> / <a href="#">Élèves</a>
+    </nav>
+  </header>
+  
+  <div class="container">
+    <button [routerLink]="['/acceuil/elevesList']" class="btn-see-list">
+      <span class="icon-list">≡</span> Voir liste des élèves
+    </button>
+  </div>
 
-</header>
-<br>
-<div class="container">
-<button [routerLink]="['/acceuil/elevesList']" class="btn-see-list">Voir liste des élèves</button>
-</div>
-<div class="contact-page-container">
-  <div class="contact-form">
-    <form [formGroup]="eleveForm" (ngSubmit)="onSubmit()">
-      
-      <!-- Message de succès -->
-      <div class="alert alert-primary" role="alert" *ngIf="message">
-        <div class="success-message">{{ message }}</div>
-      </div>
+  <div class="contact-page-container">
+    <div class="contact-form">
+      <form [formGroup]="eleveForm" (ngSubmit)="onSubmit()">
+        <!-- Success message -->
+        <div class="alert alert-primary" role="alert" *ngIf="message">
+          {{ message }}
+        </div>
 
-      <!-- Message d'erreur -->
-      <div class="alert alert-danger" role="alert" *ngIf="error">
-        <div class="error-message">{{ error }}</div>
-      </div>
+        <!-- Error message -->
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+          {{ error }}
+        </div>
 
-      <!-- Prénom de l'élève -->
-      <div>
+        <!-- Row pour Prénom + Nom -->
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="custom-input-width">
+              <mat-label>Prénom</mat-label>
+              <input matInput formControlName="firstname" placeholder="Prénom de l'élève">
+              <mat-error *ngIf="eleveForm.get('firstname')?.errors?.['required']">Requis</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="custom-input-width">
+              <mat-label>Nom</mat-label>
+              <input matInput formControlName="lastname" placeholder="Nom de l'élève">
+              <mat-error *ngIf="eleveForm.get('lastname')?.errors?.['required']">Requis</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Email -->
         <mat-form-field class="custom-input-width">
-          <mat-label>Prénom de l'élève</mat-label>
-          <input matInput formControlName="firstname" placeholder="Entrer le prénom de l'élève">
-          <mat-error *ngIf="eleveForm.get('firstname')?.errors?.['required']">Le prénom est requis</mat-error>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="email@exemple.com">
+          <mat-error *ngIf="eleveForm.get('email')?.errors?.['required']">Email requis</mat-error>
+          <mat-error *ngIf="eleveForm.get('email')?.errors?.['email']">Format email invalide</mat-error>
         </mat-form-field>
-      </div>
 
-      <!-- Nom de l'élève -->
-      <div>
+        <!-- Mot de passe -->
         <mat-form-field class="custom-input-width">
-          <mat-label>Nom de l'élève</mat-label>
-          <input matInput formControlName="lastname" placeholder="Entrer le nom de l'élève">
-          <mat-error *ngIf="eleveForm.get('lastname')?.errors?.['required']">Le nom est requis</mat-error>
+          <mat-label>Mot de passe</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Créez un mot de passe">
+          <mat-error *ngIf="eleveForm.get('password')?.errors?.['required']">Mot de passe requis</mat-error>
         </mat-form-field>
-      </div>
 
-      <!-- Email de l'élève -->
-      <div>
-        <mat-form-field class="custom-input-width">
-          <mat-label>Email de l'élève</mat-label>
-          <input matInput formControlName="email" placeholder="Entrer l'e-mail de l'élève">
-          <mat-error *ngIf="eleveForm.get('email')?.errors?.['required']">L'email est requis</mat-error>
-          <mat-error *ngIf="eleveForm.get('email')?.errors?.['email']">L'email doit être valide</mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Mot de passe de l'élève -->
-      <div>
-        <mat-form-field class="custom-input-width">
-          <mat-label>Mot de passe de l'élève</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Entrer le mot de passe de l'élève">
-          <mat-error *ngIf="eleveForm.get('password')?.errors?.['required']">Le mot de passe est requis</mat-error>
-        </mat-form-field>
-      </div>
-
-      <!-- Bouton de soumission -->
-      <button type="submit" pButton label="Ajouter" [disabled]="!eleveForm.valid">Ajouter</button>
-    </form>
+        <!-- Submit Button -->
+        <button type="submit" pButton label="Ajouter" [disabled]="!eleveForm.valid" class="btn-submit">
+          <i class="pi pi-user-plus"></i> Ajouter l'élève
+        </button>
+      </form>
+    </div>
   </div>
 </div>

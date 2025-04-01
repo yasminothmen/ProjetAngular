@@ -1,0 +1,120 @@
+/* Modal Container - Adapté au thème */
+h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: $text;
+    position: relative;
+    padding-bottom: 0.5rem;
+  
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, $secondary, $accent);
+    }
+  }
+  
+  /* Form Styling - Intégration du card-style */
+  form {
+    @include card-style;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba($border, 0.5);
+  }
+  
+  /* Input Fields - Style cohérent */
+  mat-form-field {
+    width: 100%;
+  
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  
+    .mat-form-field-outline {
+      color: rgba($text, 0.3);
+    }
+  
+    .mat-form-field-label {
+      color: rgba($text, 0.7);
+    }
+  
+    .mat-input-element {
+      color: $text;
+      caret-color: $accent;
+    }
+  
+    &.mat-focused {
+      .mat-form-field-label {
+        color: $accent;
+      }
+      .mat-form-field-ripple {
+        background-color: $accent;
+      }
+    }
+  }
+  
+  /* Buttons - Style unifié */
+  .btn-enregistrer {
+    background-color: $secondary;
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 1rem;
+  
+    &:hover {
+      background-color: darken($secondary, 5%);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba($secondary, 0.3);
+    }
+  
+    &:active {
+      transform: translateY(0);
+    }
+  }
+  
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5rem 0 0;
+    margin-top: 1rem;
+    border-top: 1px solid rgba($border, 0.3);
+  }
+  
+  /* Dialog Container - Style intégré */
+  .mat-dialog-container {
+    background: rgba($bg-dark, 0.9);
+    backdrop-filter: blur(5px);
+    padding: 2rem !important;
+    max-width: 500px;
+    width: 90vw;
+  
+    .mat-dialog-content {
+      padding: 0;
+      margin: 0;
+      max-height: 80vh;
+    }
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 600px) {
+    form {
+      padding: 1.5rem;
+    }
+  
+    .mat-dialog-container {
+      padding: 1rem !important;
+      width: 95vw;
+    }
+  }

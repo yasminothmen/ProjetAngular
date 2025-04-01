@@ -44,6 +44,7 @@ import { provideAuth } from '@angular/fire/auth';
 import { getAuth } from 'firebase/auth';
 import { AngularFireModule } from '@angular/fire/compat'
 import { environment } from './environments/environment';
+import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { environment } from './environments/environment';
     EmploiAffichageComponent,
     DashboardComponent,
     VerifyEmailComponent,
-    LoginComponent
+    LoginComponent,
+    TeacherScheduleComponent
      ],
   imports: [
     BrowserModule,

@@ -18,7 +18,7 @@ export class AuthService {
         if(res.user?.emailVerified == true) {
           this.router.navigate(['acceuil/dashboard']);
         } else {
-          this.router.navigate(['acceuil/verify-email']);
+          this.router.navigate(['/verify-email']);
         }
 
     }, err => {

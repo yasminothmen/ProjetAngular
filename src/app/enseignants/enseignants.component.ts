@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { MatiereService } from '../services/matiere.service';  // Assurez-vous d'importer ce service
+import { MatiereService } from '../services/matiere.service';
+import { AngularFireAuth } from '@angular/fire/compat/auth'; // Import Firebase Auth
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
@@ -14,72 +15,142 @@ import { BooleanInput } from '@angular/cdk/coercion';
   styleUrls: ['./enseignants.component.scss']
 })
 export class EnseignantsComponent implements OnInit {
-isMultiple: BooleanInput;
-toggleMultiple($event: MatCheckboxChange) {
-throw new Error('Method not implemented.');
-}
+  isMultiple: BooleanInput;
   enseignantForm: FormGroup;
-  matieres: any[] = []; // Liste des matières
+  matieres: any[] = [];
   message: string = '';
   error: string = '';
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private matiereService: MatiereService, // Injection correcte du service MatiereService
+    private matiereService: MatiereService,
+    private afAuth: AngularFireAuth, // Injection du service Firebase Auth
     private router: Router
   ) {
+    // Initialisation du formulaire
     this.enseignantForm = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      matieresEnseignees: [[], Validators.required], // Correction du nom pour correspondre au formulaire
-      password: ['', Validators.required]
+      matieresEnseignees: [[], Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   ngOnInit(): void {
-    // Récupérer les matières disponibles depuis le service
+    this.loadMatieres();
+  }
+
+  // Charge la liste des matières disponibles
+  private loadMatieres(): void {
     this.matiereService.getAllSubjects().subscribe(
       (data: any[]) => {
         this.matieres = data;
       },
-      (err: any) => { // Spécifier le type 'any' pour l'erreur
+      (err: any) => {
         console.error('Erreur lors de la récupération des matières', err);
         this.error = 'Erreur lors de la récupération des matières';
       }
     );
   }
 
-  // Implémentation de la méthode onSubmit
-  onSubmit() {
+  // Soumission du formulaire
+  async onSubmit() {
     if (this.enseignantForm.valid) {
-      const formData = this.enseignantForm.value;
-      // Envoyer les données à votre service pour l'ajout de l'enseignant
-      this.userService.addTeacher(formData).subscribe(
-        (response) => {
-          this.message = 'Enseignant ajouté avec succès !';
-          Swal.fire({
-                      icon: 'success',
-                      title: 'Ajout',
-                      text: 'Enseignant ajoutée avec succès',
-                    });
-          this.router.navigate(['acceuil/listeenseignants']); // Rediriger vers la liste des enseignants
-        },
-        (error) => {
-          console.error('Erreur lors de l\'ajout de l\'enseignant', error);
-          this.error = 'Erreur lors de l\'ajout de l\'enseignant';
-        }
-      );
+      try {
+        const formData = this.enseignantForm.value;
+        
+        // Étape 1: Création du compte Firebase
+        const firebaseUser = await this.createFirebaseAccount(formData.email, formData.password);
+        
+        // Étape 2: Préparation des données pour MongoDB
+        const teacherData = {
+          ...formData,
+          firebaseUid: firebaseUser.uid, // Stockage de l'UID Firebase
+          role: 'teacher'
+        };
+
+        // Étape 3: Enregistrement dans MongoDB
+        await this.saveTeacherToMongoDB(teacherData);
+        
+        this.showSuccessAlert();
+        this.redirectToTeacherList();
+      } catch (error) {
+        this.handleError(error);
+      }
     } else {
       this.error = 'Veuillez remplir tous les champs requis';
     }
   }
 
-  // Implémentation de la méthode onSubjectSelection
-  onSubjectSelection(event: MatSelectChange) {
-    const selectedMatieres = event.value; // Récupérer les matières sélectionnées
-    console.log('Matières sélectionnées:', selectedMatieres);
-    // Vous pouvez ajouter des logiques supplémentaires si nécessaire
+  // Crée un compte Firebase avec email/mot de passe
+  private async createFirebaseAccount(email: string, password: string): Promise<any> {
+    try {
+      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+      return userCredential.user;
+    } catch (firebaseError) {
+      console.error('Erreur Firebase:', firebaseError);
+      throw new Error(this.getFirebaseErrorMessage(firebaseError));
+    }
+  }
+
+  // Enregistre l'enseignant dans MongoDB
+  private saveTeacherToMongoDB(teacherData: any): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.userService.addTeacher(teacherData).subscribe(
+        () => resolve(),
+        (error) => reject(error)
+      );
+    });
+  }
+
+  // Gère les erreurs Firebase
+  private getFirebaseErrorMessage(error: any): string {
+    switch (error.code) {
+      case 'auth/email-already-in-use':
+        return 'Cet email est déjà utilisé';
+      case 'auth/invalid-email':
+        return 'Email invalide';
+      case 'auth/weak-password':
+        return 'Le mot de passe doit contenir au moins 6 caractères';
+      default:
+        return 'Erreur lors de la création du compte';
+    }
+  }
+
+  // Affiche une notification de succès
+  private showSuccessAlert(): void {
+    Swal.fire({
+      icon: 'success',
+      title: 'Succès',
+      text: 'Enseignant créé avec succès dans Firebase et MongoDB',
+    });
+  }
+
+  // Redirige vers la liste des enseignants
+  private redirectToTeacherList(): void {
+    this.router.navigate(['acceuil/listeenseignants']);
+  }
+
+  // Gère les erreurs globales
+  private handleError(error: any): void {
+    console.error('Erreur:', error);
+    this.error = error.message || 'Une erreur est survenue';
+    Swal.fire({
+      icon: 'error',
+      title: 'Erreur',
+      text: this.error,
+    });
+  }
+
+  // Gestion de la sélection des matières
+  onSubjectSelection(event: MatSelectChange): void {
+    console.log('Matières sélectionnées:', event.value);
+  }
+
+  // Méthode pour le toggle (à implémenter si nécessaire)
+  toggleMultiple($event: MatCheckboxChange): void {
+    this.isMultiple = $event.checked;
   }
 }

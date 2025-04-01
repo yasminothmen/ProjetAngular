@@ -1,12 +1,70 @@
-<header>
-    <h1>Dashboard</h1>
-    <nav>
-      <a href="#">Accueil</a> / <a href="#">Dashboard</a>
-    </nav>
-    <br>
-  
-  </header>
-  <br>
+<header class="dashboard-header">
+  <h1>Gestion Scolaire</h1>
+  <nav class="breadcrumb">
+    <a href="#">Accueil</a> / <a href="#" class="active">Tableau de Bord</a>
+  </nav>
+</header>
 
-<p>dashboard works!</p>
-<!-- <button (click)="logout()">Logout</button> -->
+<div class="dashboard-container">
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Chargement des statistiques...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-user-graduate"></i>
+      </div>
+      <h2>Étudiants</h2>
+      <p>{{ stats.totalStudents }}</p>
+      <div class="stat-footer">Inscrits cette année</div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-chalkboard-teacher"></i>
+      </div>
+      <h2>Enseignants</h2>
+      <p>{{ stats.totalTeachers }}</p>
+      <div class="stat-footer">Dont {{ stats.activeTeachers }} actifs</div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-book-open"></i>
+      </div>
+      <h2>Matières</h2>
+      <p>{{ stats.totalSubjects }}</p>
+      <div class="stat-footer">Enseignées</div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-school"></i>
+      </div>
+      <h2>Classes</h2>
+      <p>{{ stats.totalClasses }}</p>
+      <div class="stat-footer">Dont {{ stats.activeClasses }} actives</div>
+    </div>
+    
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-calendar-alt"></i>
+      </div>
+      <h2>Emplois du temps</h2>
+      <p>{{ stats.totalSchedules }}</p>
+      <div class="stat-footer">Planifiés</div>
+    </div>
+    
+    <!-- Ajout d'une carte supplémentaire pour les statistiques -->
+    <div class="stat-card">
+      <div class="stat-icon">
+        <i class="fas fa-chart-pie"></i>
+      </div>
+      <h2>Taux de remplissage</h2>
+      <p>{{ stats.fillRate }}%</p>
+      <div class="stat-footer">Moyenne des classes</div>
+    </div>
+  </div>
+</div>

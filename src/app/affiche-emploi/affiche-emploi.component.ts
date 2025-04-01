@@ -1,30 +1,28 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-import { ScheduleService } from '../services/emploie.service'; // Service qui récupère les horaires
-import { Schedule, Session } from '../models/emploie'; // Types de données utilisés pour les horaires et les sessions
-import html2pdf from 'html2pdf.js'; // Bibliothèque pour convertir le contenu HTML en PDF
+import { ScheduleService } from '../services/emploie.service';
+import { Schedule, Session } from '../models/emploie';
+import html2pdf from 'html2pdf.js';
+import { Location } from '@angular/common'; // Import ajouté pour le bouton retour
 
-// Définition du composant Angular
 @Component({
-  selector: 'app-emploie-affichage', // Sélecteur pour lier ce composant au HTML
-  templateUrl: './affiche-emploi.component.html', // Template HTML du composant
-  styleUrls: ['./affiche-emploi.component.css'] // Fichier CSS pour la mise en forme
+  selector: 'app-emploie-affichage',
+  templateUrl: './affiche-emploi.component.html',
+  styleUrls: ['./affiche-emploi.component.scss']
 })
 export class EmploiAffichageComponent implements OnInit {
 
-  // Propriétés pour stocker les sessions, les jours, les heures et le tableau d'emploi du temps
   sessions: Session[] = [];
-  days: string[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]; // Liste des jours de la semaine
-  hours: string[] = []; // Liste des heures, à remplir dynamiquement
-  timetable: { [hour: string]: { [day: string]: Session | null } } = {}; // Tableau pour organiser les sessions par heure et jour
-  displayedColumns: string[] = ["hour", ...this.days]; // Colonnes à afficher dans le tableau (heures + jours)
+  days: string[] = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
+  hours: string[] = [];
+  timetable: { [hour: string]: { [day: string]: Session | null } } = {};
+  displayedColumns: string[] = ["hour", ...this.days];
 
-  selectedClass: string = ''; // Classe sélectionnée par l'utilisateur
-  loading: boolean = false; // Indicateur de chargement
-  errorMessage: string = ''; // Message d'erreur en cas de problème
-  subjectColors: { [subject: string]: string } = {}; // Stocke les couleurs des matières
-  classefound=false;
+  selectedClass: string = '';
+  loading: boolean = false;
+  errorMessage: string = '';
+  subjectColors: { [subject: string]: string } = {};
+  classefound = false;
 
-  // Liste de couleurs prédéfinies pour assigner une couleur unique à chaque matière
   predefinedColors: string[] = [
     "#FF5733", "#33FF57", "#3357FF", "#F2C300", "#FF8C00", "#8A2BE2", "#FF1493", "#20B2AA", "#FFD700", "#ADFF2F",
     "#F08080", "#C71585", "#4682B4", "#7FFF00", "#D2691E", "#DC143C", "#B0C4DE", "#FF6347", "#98FB98", "#FFFACD",
@@ -33,118 +31,111 @@ export class EmploiAffichageComponent implements OnInit {
     "#FF7F50", "#8B008B", "#00FA9A", "#228B22", "#B8860B", "#A52A2A", "#800000", "#BC8F8F", "#FF6A6A", "#3CB371"
   ];
 
-  // Injection des services nécessaires pour récupérer les données et effectuer des changements
-  constructor(private scheduleService: ScheduleService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private scheduleService: ScheduleService, 
+    private cdr: ChangeDetectorRef,
+    private location: Location // Injection du service Location
+  ) {}
 
-  // Méthode appelée lors de l'initialisation du composant
   ngOnInit(): void {}
 
-  // Méthode pour récupérer l'emploi du temps pour la classe sélectionnée
+  // Méthode pour le bouton retour
+  goBack(): void {
+    this.location.back();
+  }
+
   fetchSchedule(): void {
-    if (!this.selectedClass.trim()) { // Si la classe n'est pas valide
-      this.errorMessage = 'Veuillez entrer une classe valide.'; // Afficher un message d'erreur
-      this.classefound=false;
+    if (!this.selectedClass.trim()) {
+      this.errorMessage = 'Veuillez entrer une classe valide.';
+      this.classefound = false;
       return;
     }
 
-    this.loading = true; // Indiquer que l'on charge les données
-    this.errorMessage = ''; // Réinitialiser le message d'erreur
-this.sessions=[];
-    // Appeler le service pour récupérer les horaires pour la classe sélectionnée
+    this.loading = true;
+    this.errorMessage = '';
+    this.sessions = [];
+
     this.scheduleService.getScheduleForClass(this.selectedClass).subscribe(
       (data) => {
-        // Aplatir les données pour récupérer toutes les sessions
-        if (data && Array.isArray(data) ) {
+        if (data && Array.isArray(data)) {
           console.log("data: ", data)
-          this.sessions = data.flatMap(schedule => schedule.sessions || []); // Safely access sessions
+          this.sessions = data.flatMap(schedule => schedule.sessions || []);
         }
-console.log("sessions", this.sessions)
+        console.log("sessions", this.sessions)
         if (this.sessions.length === 0) {
           this.classefound = false;
         } else {
           this.classefound = true;
         }
         console.log(this.classefound)
-        // Trier les heures en ordre croissant
+
         this.hours = [...new Set(this.sessions.map(session => session.time))].sort((a, b) => this.compareTimes(a, b));
 
-        // Initialiser le tableau d'emploi du temps pour chaque heure et jour
         this.timetable = {};
         this.hours.forEach(hour => {
           this.timetable[hour] = {};
           this.days.forEach(day => {
-            this.timetable[hour][day] = null; // Initialiser chaque cellule à null
+            this.timetable[hour][day] = null;
           });
         });
 
-        // Remplir le tableau d'emploi du temps avec les sessions
         this.sessions.forEach(session => {
           if (this.timetable[session.time] && this.timetable[session.time][session.day] !== undefined) {
             this.timetable[session.time][session.day] = session;
           }
-
-          // Assigner une couleur unique à chaque matière
           this.assignSubjectColor(session.subject);
         });
 
-        this.loading = false; // Fin du chargement
-        this.cdr.detectChanges(); // Déclencher la détection des changements pour mettre à jour l'affichage
-
+        this.loading = false;
+        this.cdr.detectChanges();
       },
       (error) => {
-        this.errorMessage = 'Erreur lors du chargement de l\'emploi du temps.'; // Afficher un message d'erreur en cas de problème
-        this.loading = false; // Fin du chargement
-        this.classefound=false;
+        this.errorMessage = 'Erreur lors du chargement de l\'emploi du temps.';
+        this.loading = false;
+        this.classefound = false;
       }
     );
   }
 
-  // Fonction pour trier les horaires dans un format de 24 heures
   compareTimes(a: string, b: string): number {
     const [aStart, aEnd] = a.split('-').map(time => this.convertTo24Hour(time));
     const [bStart, bEnd] = b.split('-').map(time => this.convertTo24Hour(time));
     return aStart - bStart;
   }
 
-
-  // Convertir une heure en format 12h (am/pm) en format 24h
   convertTo24Hour(time: string): number {
     const regex = /(\d+)(am|pm)/;
     const match = time.match(regex);
 
-    if (!match) return 0; // Si le format de l'heure n'est pas correct, retourner 0
+    if (!match) return 0;
 
     let hours = parseInt(match[1], 10);
     if (match[2] === 'pm' && hours !== 12) {
-      hours += 12; // Convertir l'heure en format 24h pour l'après-midi
+      hours += 12;
     } else if (match[2] === 'am' && hours === 12) {
-      hours = 0; // Minuit est converti en 0h
+      hours = 0;
     }
     return hours;
   }
 
-  // Assigner une couleur unique à chaque matière
   assignSubjectColor(subject: string): void {
-    if (!this.subjectColors[subject]) { // Si la matière n'a pas encore de couleur
-      const color = this.getUniqueColor(subject); // Obtenir une couleur unique
-      this.subjectColors[subject] = color; // Assigner cette couleur à la matière
+    if (!this.subjectColors[subject]) {
+      const color = this.getUniqueColor(subject);
+      this.subjectColors[subject] = color;
     }
   }
 
-
-  // Obtenir une couleur unique à partir d'un tableau de couleurs prédéfinies
   getUniqueColor(subject: string): string {
     let hash = 0;
     for (let i = 0; i < subject.length; i++) {
-      hash = subject.charCodeAt(i) + ((hash << 5) - hash); // Calculer un hash de la matière
+      hash = subject.charCodeAt(i) + ((hash << 5) - hash);
     }
-    const index = Math.abs(hash) % this.predefinedColors.length; // Trouver l'index de la couleur
-    return this.predefinedColors[index]; // Retourner la couleur correspondante
+    const index = Math.abs(hash) % this.predefinedColors.length;
+    return this.predefinedColors[index];
   }
 
-  // Méthode pour télécharger l'emploi du temps sous forme de fichier PDF
   downloadPDF(): void {
-    var element = document.getElementById('timetable-table'); // ID de l'élément HTML (tableau)
+    var element = document.getElementById('timetable-table');
 
     if (element) {
       const options = {
@@ -155,7 +146,7 @@ console.log("sessions", this.sessions)
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
       };
 
-      html2pdf(element, options); // Utiliser html2pdf pour convertir le contenu en PDF
+      html2pdf(element, options);
     }
   }
 }

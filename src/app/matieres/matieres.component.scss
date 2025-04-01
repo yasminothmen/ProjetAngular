@@ -1,183 +1,279 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// 🎨 Palette de couleurs
+$primary: #1a365d;
+$secondary: #3b82f6;
+$accent: #60a5fa;
+$text: #f8fafc;
+$bg-dark: #0a192f;
+$border: #1e3a8a;
+$card-bg: #172a45;
+$pink-accent: #fa4668;
+$light-blue: #034ea9;
+
+.class-container {
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background-color: $bg-dark;
+  position: relative;
+  overflow: visible;
+  color: $text;
+  border-radius: 12px;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: none;
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background: none;
+    animation: none;
+    z-index: 0;
   }
+}
+
+@mixin card-style {
+  background: $card-bg;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid $border;
+  transition: all 0.3s ease;
+  color: $text;
+  position: relative;
+  overflow: visible;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, $secondary, $accent);
+    opacity: 0.7;
+  }
+}
+
+@mixin hover-effect {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
   
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #007bff;
+  &::before {
+    animation: cardGlow 2s ease infinite;
   }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-  }
-  /* Style pour le bouton "Voir liste des classes" */
-.btn-see-list {
-  background-color: #392c7c; /* Couleur de fond (vert) */
-  color: white;
-  padding: 12px 20px;
-  border-radius: 5px;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+@keyframes cardGlow {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { opacity: 0.7; }
+}
+
+header {
+  @include card-style;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
-  display: inline-block;
+  position: relative;
+  overflow: visible;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $secondary, transparent);
+    animation: headerGlow 3s ease infinite;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: $text;
+    font-weight: 600;
+  }
+
+  nav {
+    color: rgba($text, 0.8);
+    font-size: 0.9rem;
+    
+    a {
+      color: rgba($text, 0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+      padding: 0 0.3rem;
+      
+      &:hover {
+        color: $accent;
+        text-decoration: underline;
+      }
+      
+      &:not(:last-child)::after {
+        content: '/';
+        margin: 0 0.5rem;
+        color: rgba($text, 0.5);
+      }
+    }
+  }
 }
 
-/* Changer la couleur de fond au survol */
-.btn-see-list:hover {
-  background-color: #392c7c; /* Couleur plus foncée au survol */
-  transform: translateY(-2px); /* Légère élévation au survol */
+@keyframes headerGlow {
+  0% { opacity: 0.3; transform: scaleX(0.5); }
+  50% { opacity: 0.8; transform: scaleX(1); }
+  100% { opacity: 0.3; transform: scaleX(0.5); }
 }
 
-/* Désactivation du bouton */
-.btn-see-list:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+.container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
-  .contact-page-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 1000px;
-    background-image: url(/assets/img/error-bg1.png);
-    background-size:100%;
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    background-position: left; /* Centers the image within the container */
-    background-color: #f8f9fa; /* Fallback background color */
-    border-radius: 8px;
+.contact-page-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.contact-form {
+  @include card-style;
+  padding: 1.5rem;
+  overflow: visible;
+  
+  &:hover {
+    @include hover-effect;
+  }
+
+  h2 {
+    color: $accent;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: $pink-accent;
+      border-radius: 3px;
+    }
+  }
+}
+
+.alert {
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  
+  &.alert-primary {
+    background-color: rgba($accent, 0.2);
+    border: 1px solid $accent;
+    color: $accent;
   }
   
+  &.alert-danger {
+    background-color: rgba($pink-accent, 0.2);
+    border: 1px solid $pink-accent;
+    color: $pink-accent;
+  }
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  
+  @media (max-width: 576px) {
+    flex-direction: column;
+    gap: 0;
+  }
+}
+
+.col {
+  flex: 1;
+}
+
+.custom-input-width {
+  width: 100%;
+  margin-bottom: 1rem;
+  
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  .mat-input-element {
+    color: $text;
+    background-color: lighten($card-bg, 8%);
+    border-radius: 8px;
+    padding: 0.75rem;
+    border: 1px solid $border;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $accent;
+      box-shadow: 0 0 0 3px rgba($accent, 0.2);
+    }
+  }
+  
+  .mat-form-field-label {
+    color: rgba($text, 0.8);
+  }
+  
+  .mat-error {
+    color: $pink-accent;
+    font-size: 0.875em;
+  }
+}
+
+.btn-see-list, .btn-submit {
+  background-color: $light-blue;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 10;
+
+  &:hover {
+    transform: translateY(-3px);
+    background-color: lighten($light-blue, 5%);
+  }
+  
+  &:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .class-container {
+    padding: 1rem;
+  }
   
   .contact-form {
-    flex: 1 1 100%; /* Adjust the flex basis to give the contact form more width */
-    background: white;
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
   }
   
-  .contact-info {
-    flex: 1 1 30%; /* Adjust the flex basis to reduce the width of the contact info */
-    padding: 20px;
-    margin: 10px 0;
+  .btn-see-list, .btn-submit {
+    width: 100%;
   }
-  
-  .contact-info h2 {
-    margin-bottom: 10px;
-    color: #c91515; /* Green color */
-  }
-  
-  .contact-info p {
-    margin-top: 40px;
-    font-size: 14px;
-  }
-  
-  .info-box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .info-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .info-item i {
-    color: #fa4668; /* Green color */
-    font-size: 1.5em;
-  }
-  
-  
-  
-  
-  
-  .p-error {
-    color: #f44336; // Red color for error messages
-  font-size: 0.875em; // Slightly smaller font size for error messages
-  }
-  
-  button[pButton] {
-    background-color: #392c7c; // Example primary color for submit button
-  color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    cursor: pointer;
-    &:disabled {
-      background-color: #cccccc;
-    }
-  }
-  
-  
-  .image-preview {
-    margin-top: 10px;
-  
-    max-width: 30%;
-    max-height: 200px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  @media (max-width: 768px) {
-    .contact-info, .contact-form {
-      flex: 1 1 100%;
-    }
-  }
-  header {
-    min-width: 100%;
-    text-align: center;
-    padding: 20px;
-    background-color: #0631a6;
-    color: white;
-    max-height: 120px;
-  
-  }
-  
-  header nav {
-    margin-top: 10px;
-  
-  }
-  
-  header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 5px;
-  }
-  header  h1{
-    color: white;
-  
-  }
-  :host {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .custom-input-width {
-    width: 100%; /* Adjust the width as needed */
-  }
-  
-  .row {
-    display: flex;
-    gap: 16px; /* Adjust the space between the columns as needed */
-  }
-  
-  .col {
-    flex: 1; /* Ensures that both columns take up equal space */
-  }
-  
-  .custom-input-width {
-    width: 100%; /* Ensure input fields take up full width of their column */
-  }
-  
+}

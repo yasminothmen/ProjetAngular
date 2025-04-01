@@ -1,0 +1,183 @@
+// Couleurs personnalisées
+$title-blue: #1976d2; // Nouvelle couleur pour le titre
+$light-gray: #f5f5f5;
+$medium-gray: #e0e0e0;
+$dark-gray: #333333;
+$white: #ffffff;
+$error-red: #f44336;
+
+.emploi-container {
+  padding: 2rem;
+  background-color: $white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 1200px;
+  color: $dark-gray;
+
+  mat-card-title {
+    font-size: 1.8rem;
+    color: $title-blue;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba($title-blue, 0.2);
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 1.5rem;
+
+    .mat-form-field-outline {
+      color: $medium-gray;
+    }
+
+    .mat-form-field-label {
+      color: rgba($dark-gray, 0.6);
+    }
+
+    .mat-input-element {
+      color: $dark-gray;
+    }
+  }
+
+  button[mat-raised-button] {
+    margin: 0.5rem 0 1.5rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &[color="primary"] {
+      background-color: $title-blue;
+      color: $white;
+      &:hover {
+        background-color: darken($title-blue, 10%);
+      }
+    }
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+
+  mat-progress-spinner {
+    margin: 1rem auto;
+    display: block;
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: $error-red;
+    padding: 1rem;
+    background-color: rgba($error-red, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid $error-red;
+    margin: 1rem 0;
+
+    mat-icon {
+      font-size: 1.2rem;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  #teacher-timetable {
+    width: 100%;
+    margin: 2rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: $white;
+    border: 1px solid $medium-gray;
+
+    th.mat-header-cell {
+      background-color: $light-gray;
+      color: $dark-gray;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-align: center;
+      padding: 1rem;
+      border-bottom: 2px solid $medium-gray;
+    }
+
+    td.mat-cell {
+      border: 1px solid $medium-gray;
+      padding: 0;
+      text-align: center;
+
+      .hour-cell {
+        font-weight: 500;
+        background-color: $light-gray;
+      }
+
+      .cell-content {
+        padding: 12px 8px;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        min-height: 60px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        strong {
+          color: $dark-gray;
+          display: block;
+          margin-bottom: 0.3rem;
+          font-size: 0.9rem;
+        }
+
+        small {
+          color: rgba($dark-gray, 0.7);
+          font-size: 0.8rem;
+        }
+      }
+
+      &:hover .cell-content {
+        background-color: rgba($medium-gray, 0.5) !important;
+      }
+    }
+  }
+
+  .pdf-button {
+    margin-top: 1.5rem;
+    background-color: $title-blue !important;
+    color: $white !important;
+    padding: 0.8rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: darken($title-blue, 10%) !important;
+      transform: translateY(-2px);
+    }
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .emploi-container {
+    padding: 1rem;
+
+    mat-card-title {
+      font-size: 1.5rem;
+    }
+
+    #teacher-timetable {
+      th.mat-header-cell, td.mat-cell {
+        padding: 0.5rem;
+        font-size: 0.8rem;
+
+        .cell-content {
+          padding: 8px 4px;
+          min-height: 50px;
+        }
+      }
+    }
+  }
+}

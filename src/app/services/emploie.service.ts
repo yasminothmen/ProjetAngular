@@ -35,4 +35,10 @@ export class ScheduleService {
   deleteSchedule(id: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
+  getScheduleForTeacher(teacherName: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/teacher/${encodeURIComponent(teacherName)}`);
+  }
+
+  
+
 }

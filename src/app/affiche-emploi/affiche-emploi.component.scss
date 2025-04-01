@@ -1,0 +1,259 @@
+// Couleurs personnalisées
+$primary-blue: #1a365d; // Bleu foncé pour les boutons et titre
+$light-blue: #e6f0fa; // Bleu clair pour les surbrillances
+$light-gray: #f5f5f5;
+$medium-gray: #e0e0e0;
+$dark-gray: #333333;
+$white: #ffffff;
+$error-red: #f44336;
+
+.emploi-container {
+  padding: 2rem;
+  background-color: $white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 1200px;
+  color: $dark-gray;
+
+  mat-card-title {
+    font-size: 1.8rem;
+    color: $primary-blue;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid rgba($primary-blue, 0.2);
+    font-weight: 600;
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 1.5rem;
+
+    .mat-form-field-outline {
+      color: $medium-gray;
+    }
+
+    .mat-form-field-label {
+      color: rgba($dark-gray, 0.6);
+    }
+
+    .mat-input-element {
+      color: $dark-gray;
+      font-size: 1rem;
+    }
+  }
+
+  button[mat-raised-button] {
+    margin: 0.5rem 0 1.5rem;
+    padding: 0.7rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    &[color="primary"] {
+      background-color: $primary-blue;
+      color: $white;
+      &:hover {
+        background-color: darken($primary-blue, 10%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      }
+    }
+
+    mat-icon {
+      margin-right: 8px;
+      font-size: 1.2rem;
+    }
+  }
+
+  mat-progress-spinner {
+    margin: 2rem auto;
+    display: block;
+
+    circle {
+      stroke: $primary-blue;
+    }
+  }
+  .back-button {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      transform: translateX(-2px);
+    }
+  
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: $error-red;
+    padding: 1rem;
+    background-color: rgba($error-red, 0.08);
+    border-radius: 8px;
+    border-left: 4px solid $error-red;
+    margin: 1rem 0;
+    font-size: 1rem;
+
+    mat-icon {
+      font-size: 1.5rem;
+    }
+  }
+
+  #teacher-timetable {
+    width: 100%;
+    margin: 2rem 0 3rem;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: $white;
+    border: 1px solid $medium-gray;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+    th.mat-header-cell {
+      background-color: lighten($primary-blue, 55%);
+      color: $primary-blue;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-align: center;
+      padding: 1.2rem;
+      border-right: 1px solid $medium-gray;
+      border-bottom: 2px solid $medium-gray;
+
+      &:last-child {
+        border-right: none;
+      }
+    }
+
+    td.mat-cell {
+      border: 1px solid $medium-gray;
+      padding: 0;
+      text-align: center;
+      transition: all 0.2s ease;
+
+      .hour-cell {
+        font-weight: 500;
+        background-color: lighten($primary-blue, 58%);
+        color: $primary-blue;
+        padding: 1rem;
+      }
+
+      .cell-content {
+        padding: 1.2rem 0.8rem;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        min-height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: rgba($light-gray, 0.3);
+
+        strong {
+          color: $dark-gray;
+          display: block;
+          margin-bottom: 0.4rem;
+          font-size: 0.95rem;
+          font-weight: 500;
+        }
+
+        small {
+          color: rgba($dark-gray, 0.8);
+          font-size: 0.85rem;
+          line-height: 1.3;
+        }
+      }
+
+      &:hover .cell-content {
+        background-color: $light-blue !important;
+        transform: scale(1.02);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+    }
+  }
+
+  .pdf-button {
+    margin-top: 1.5rem;
+    background-color: $primary-blue !important;
+    color: $white !important;
+    padding: 0.8rem 2.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    &:hover {
+      background-color: darken($primary-blue, 10%) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+
+    mat-icon {
+      margin-right: 10px;
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .emploi-container {
+    padding: 1.5rem;
+    margin: 1rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+
+    mat-card-title {
+      font-size: 1.5rem;
+      padding-bottom: 0.3rem;
+    }
+
+    button[mat-raised-button] {
+      padding: 0.6rem 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    #teacher-timetable {
+      th.mat-header-cell, td.mat-cell {
+        padding: 0.6rem;
+        font-size: 0.8rem;
+
+        .cell-content {
+          padding: 0.8rem 0.4rem;
+          min-height: 60px;
+
+          strong {
+            font-size: 0.85rem;
+          }
+
+          small {
+            font-size: 0.75rem;
+          }
+        }
+      }
+    }
+
+    .pdf-button {
+      padding: 0.7rem 1.8rem;
+      font-size: 0.9rem;
+    }
+  }
+}

@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-listeclasses',
   templateUrl: './listeclasses.component.html',
-  styleUrls: ['./listeclasses.component.css']
+  styleUrls: ['./listeclasses.component.scss']
 })
 export class ListeclassesComponent implements  OnInit{
 

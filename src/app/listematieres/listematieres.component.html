@@ -1,3 +1,4 @@
+<div class="matierelist-container"> 
 <header>
   <h1>Liste des Matières</h1>
   <nav>
@@ -7,7 +8,9 @@
 </header>
 <br>
 <div class="container">
-<button [routerLink]="['/acceuil/matieres']" >Ajouter une matière</button>
+  <button [routerLink]="['/acceuil/matieres']">
+    <i class="fas fa-plus-circle"></i> Ajouter une matière
+  </button>
 </div>
 <div class="matieres-container">
   <!-- No matieres available -->
@@ -36,6 +39,8 @@
         <!-- <button (click)="onViewDetails(matiere.id)" class="details-button">Détails</button> -->
         <button (click)="onDelete(matiere.id)" class="delete-button">Supprimer</button>
       </div>
-    </div>
-  </div>
+     </div>
+   </div>
+ </div>
 </div>
+

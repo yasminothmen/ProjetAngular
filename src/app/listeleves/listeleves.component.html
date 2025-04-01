@@ -1,7 +1,7 @@
 <header>
-  <h1>Ajouter un Élève</h1>
+  <h1>Liste des élèves</h1>
   <nav>
-    <a href="#">Accueil</a> / <a href="#">Liste Élèves</a>
+    <a href="#">Accueil</a> / <a href="#">Liste des élèves</a>
   </nav>
   <br>
 </header>
@@ -12,8 +12,7 @@
     <input matInput (keyup)="applyFilter($event)"  #input>
   </mat-form-field>
 
-  <button  routerLink="/acceuil/eleves">Ajouter un élève</button>
-</div>
+  <button class="add-student-btn" routerLink="/acceuil/eleves">Ajouter élève</button></div>
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>

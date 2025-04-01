@@ -1,224 +1,333 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+// 🎨 Palette de couleurs
+$primary: #1a365d;
+$secondary: #3b82f6;
+$accent: #60a5fa;
+$text: #f8fafc;
+$bg-dark: #0a192f;
+$border: #1e3a8a;
+$card-bg: #172a45;
+$pink-accent: #fa4668;
+$light-blue: #034ea9;
+
+.class-container {
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  background-color: $bg-dark;
+  position: relative;
+  color: $text;
+  border-radius: 12px;
+  transition: background-color 0.3s ease-in-out;
+  box-shadow: none;
+}
+
+@mixin card-style {
+  background: $card-bg;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid $border;
+  transition: all 0.3s ease;
+  color: $text;
+  position: relative;
+}
+
+@mixin hover-effect {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+header {
+  @include card-style;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+
+  h1 {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    color: $text;
+    font-weight: 600;
+  }
+
+  nav {
+    color: rgba($text, 0.8);
+    font-size: 0.9rem;
+    
+    a {
+      color: rgba($text, 0.8);
+      text-decoration: none;
+      transition: color 0.3s;
+      padding: 0 0.3rem;
+      
+      &:hover {
+        color: $accent;
+        text-decoration: underline;
+      }
+      
+      &:not(:last-child)::after {
+        content: '/';
+        margin: 0 0.5rem;
+        color: rgba($text, 0.5);
+      }
+    }
+  }
+}
+
+.contact-form {
+  @include card-style;
+  padding: 1.5rem;
+  position: relative;
+
+  &:hover {
+    @include hover-effect;
+  }
+
+  h2 {
+    color: $accent;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+}
+
+.custom-input-width {
+  width: 100%;
+  margin-bottom: 1rem;
+  
+  .mat-form-field {
+    width: 100%;
   }
   
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #007bff;
-  }
-  
-  .container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .btn-see-list {
-    background-color: #392c7c;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-align: center;
-    display: inline-block;
-  }
-  
-  .btn-see-list:hover {
-    background-color: #392c7c;
-    transform: translateY(-2px);
-  }
-  
-  .btn-see-list:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  .contact-page-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 20px;
-    margin: 0 auto;
-    max-width: 1000px;
-    background-image: url(/assets/img/error-bg1.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: left;
-    background-color: #f8f9fa;
+  .mat-input-element {
+    color: $text;
+    background-color: lighten($card-bg, 8%);
     border-radius: 8px;
+    padding: 0.75rem;
+    border: 1px solid $border;
+    transition: all 0.3s ease;
+    
+    &:focus {
+      border-color: $accent;
+      box-shadow: 0 0 0 3px rgba($accent, 0.2);
+    }
+  }
+  
+  .mat-form-field-label {
+    color: rgba($text, 0.8);
+  }
+  
+  .mat-error {
+    color: $pink-accent;
+    font-size: 0.875em;
+  }
+
+  .mat-select-value, .mat-select-arrow {
+    color: $text;
+  }
+}
+.navigation-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  width: 100%;
+
+  .nav-button {
+    @include card-style;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, $secondary, $accent);
+    }
+
+    &:first-child {
+      background-color: $primary;
+      color: $text;
+      
+      &:hover {
+        background-color: darken($primary, 5%);
+      }
+    }
+    
+    &:last-child {
+      background-color: $card-bg;
+      color: $accent;
+      
+      &:hover {
+        background-color: lighten($card-bg, 5%);
+      }
+    }
+    
+    &:hover {
+      @include hover-effect;
+      
+      &::before {
+        animation: headerGlow 1.5s ease infinite;
+      }
+    }
+    
+    mat-icon {
+      font-size: 1.1em;
+      transition: transform 0.3s ease;
+    }
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    
+    .nav-button {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}
+// Sessions container
+.sessions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+}
+
+// Session item
+.session-item {
+  @include card-style;
+  padding: 1.2rem;
+  border-left: 4px solid $accent;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+
+  h3 {
+    width: 100%;
+    font-size: 1.2rem;
+    color: $accent;
+    margin-bottom: 0.5rem;
+  }
+}
+
+// Action buttons
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1rem;
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    text-transform: none;
+    border-radius: 6px;
+    padding: 0.8rem 1.5rem;
+  }
+}
+form {
+  max-width: 700px;  // Largeur maximale du formulaire
+  width: 100%;       // Ajustement automatique
+  margin: 2rem auto; // Centrage horizontal
+  padding: 2rem;     // Espacement intérieur
+  
+  @media (max-width: 1024px) { 
+    max-width: 90%; // Réduction de la largeur sur tablette
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 768px) { 
+    max-width: 95%; // Largeur presque pleine sur petits écrans
+    padding: 1.2rem;
+  }
+
+  @media (max-width: 480px) { 
+    max-width: 100%; // Pleine largeur sur mobile
+    padding: 1rem;
+  }
+}
+
+// Boutons
+.btn-submit {
+  background-color: $light-blue;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 10;
+
+  &:hover {
+    transform: translateY(-2px);
+    background-color: lighten($light-blue, 5%);
+  }
+  
+  &:disabled {
+    background: #cccccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+// Bouton delete
+button[color="warn"] {
+  background-color: $pink-accent !important;
+  color: white !important;
+
+  &:hover {
+    background-color: darken($pink-accent, 10%) !important;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .class-container {
+    padding: 1rem;
   }
   
   .contact-form {
-    flex: 1 1 100%;
-    background: white;
-    padding: 20px;
-    margin: 10px 0;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
   }
-  
-  .contact-info {
-    flex: 1 1 30%;
-    padding: 20px;
-    margin: 10px 0;
-  }
-  
-  .contact-info h2 {
-    margin-bottom: 10px;
-    color: #c91515;
-  }
-  
-  .contact-info p {
-    margin-top: 40px;
-    font-size: 14px;
-  }
-  
-  .info-box {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .info-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .info-item i {
-    color: #fa4668;
-    font-size: 1.5em;
-  }
-  
-  .p-error {
-    color: #f44336;
-    font-size: 0.875em;
-  }
-  
-  button[pButton] {
-    background-color: #392c7c;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    cursor: pointer;
-  
-    &:disabled {
-      background-color: #cccccc;
-    }
-  }
-  
-  .image-preview {
-    margin-top: 10px;
-    max-width: 30%;
-    max-height: 200px;
-    border-radius: 4px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  @media (max-width: 768px) {
-    .contact-info, .contact-form {
-      flex: 1 1 100%;
-    }
-  }
-  
-  header {
-    min-width: 100%;
-    text-align: center;
-    padding: 20px;
-    background-color: #0631a6;
-    color: white;
-    max-height: 120px;
-  }
-  
-  header nav {
-    margin-top: 10px;
-  }
-  
-  header nav a {
-    color: white;
-    text-decoration: none;
-    margin: 0 5px;
-  }
-  
-  header h1 {
-    color: white;
-  }
-  
-  :host {
-    display: flex;
+
+  .session-item {
     flex-direction: column;
     align-items: flex-start;
   }
-  
-  .custom-input-width {
-    width: 100%;
-  }
-  
-  .row {
-    display: flex;
-    gap: 16px;
-  }
-  
-  .col {
-    flex: 1;
-  }
-  
-  .custom-input-width {
-    width: 100%;
-  }
-  
-  form {
-    display: flex;
+
+  .action-buttons {
     flex-direction: column;
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
   }
-  
-  mat-form-field {
+
+  .btn-submit {
     width: 100%;
   }
-  
-  mat-select {
-    width: 100%;
-  }
-  
-  button {
-    background-color: #392c7c;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 5px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  button:hover {
-    background-color: #392c7c;
-    transform: translateY(-2px);
-  }
-  
-  button:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-  }
-  
-  button[type="button"] {
-    background-color: #f44336;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 5px;
-  }
-  
-  button[type="button"]:hover {
-    background-color: #c73829;
-  }
-  
+}

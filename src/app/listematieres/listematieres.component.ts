@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-listematieres',
   templateUrl: './listematieres.component.html',
-  styleUrls: ['./listematieres.component.css']
+  styleUrls: ['./listematieres.component.scss']
 })
 export class ListematieresComponent implements OnInit {
 

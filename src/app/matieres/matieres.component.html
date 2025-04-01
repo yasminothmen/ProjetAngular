@@ -1,71 +1,72 @@
-<header>
-  <h1>Ajouter Matière</h1>
-  <nav>
-    <a href="#">Accueil</a> / <a href="#">Matières</a>
-  </nav>
-  <br>
-</header>
-<br>
-<div class="container">
-  <button [routerLink]="['/acceuil/listematieres']" class="btn-see-list">Voir liste Matières</button>
-</div>
-<div class="contact-page-container">
-  <div class="contact-form">
-    <form [formGroup]="matiereForm" (ngSubmit)="onSubmit()">
-      <!-- Success message -->
-      <div class="alert alert-primary" role="alert" *ngIf="message">
-        <div class="success-message">{{ message }}</div>
-      </div>
+<div class="class-container">
+  <header>
+    <h1>Ajouter Matière</h1>
+    <nav>
+      <a href="#">Accueil</a> / <a href="#">Matières</a>
+    </nav>
+  </header>
+  
+  <div class="container">
+    <button [routerLink]="['/acceuil/listematieres']" class="btn-see-list">      <span class="icon-list">≡</span> Voir liste des matières
+    </button>
+  </div>
 
-      <!-- Error message -->
-      <div class="alert alert-danger" role="alert" *ngIf="error">
-        <div class="error-message">{{ error }}</div>
-      </div>
+  <div class="contact-page-container">
+    <div class="contact-form">
+      <form [formGroup]="matiereForm" (ngSubmit)="onSubmit()">
+        <!-- Success message -->
+        <div class="alert alert-primary" role="alert" *ngIf="message">
+          {{ message }}
+        </div>
 
-      <!-- matiere Name -->
-      <div>
-        <mat-form-field class="custom-input-width">
-          <mat-label>Nom de la matière</mat-label>
-          <input matInput formControlName="name" placeholder="Entrer le nom de la matière">
-          <mat-error *ngIf="matiereForm.get('name')?.errors?.['required']">Le nom est requis</mat-error>
-        </mat-form-field>
-      </div>
+        <!-- Error message -->
+        <div class="alert alert-danger" role="alert" *ngIf="error">
+          {{ error }}
+        </div>
 
-      <!-- Nombre d'heures -->
-      <div>
-        <mat-form-field class="custom-input-width">
-          <mat-label>Nombre d'heures</mat-label>
-          <input matInput formControlName="nombreHeures" type="text" placeholder="Entrer le nombre d'heures">
-          <mat-error *ngIf="matiereForm.get('nombreHeures')?.errors?.['required']">Le nombre d'heures est requis</mat-error>
-          <mat-error *ngIf="matiereForm.get('nombreHeures')?.errors?.['pattern']">Veuillez entrer un nombre valide (ex. 12heures)</mat-error>
-        </mat-form-field>
-      </div>
+        <!-- Matière Name -->
+        <div>
+          <mat-form-field class="custom-input-width">
+            <mat-label>Nom de la matière</mat-label>
+            <input matInput formControlName="name" placeholder="Entrer le nom de la matière">
+            <mat-error *ngIf="matiereForm.get('name')?.errors?.['required']">Le nom est requis</mat-error>
+          </mat-form-field>
+        </div>
 
-      <!-- Type (Obligatoire / Optionnel) -->
-      <div>
-        <mat-form-field class="custom-input-width">
-          <mat-label>Type</mat-label>
-          <mat-select formControlName="type" placeholder="Sélectionnez le type" required>
-            <mat-option value="Obligatoire">Obligatoire</mat-option>
-            <mat-option value="Optionnel">Optionnel</mat-option>
-          </mat-select>
-          <mat-error *ngIf="matiereForm.get('type')?.hasError('required')">Le type est requis</mat-error>
-        </mat-form-field>
-      </div>
+        <!-- Nombre d'heures -->
+        <div>
+          <mat-form-field class="custom-input-width">
+            <mat-label>Nombre d'heures</mat-label>
+            <input matInput formControlName="nombreHeures" placeholder="Entrer le nombre d'heures">
+            <mat-error *ngIf="matiereForm.get('nombreHeures')?.errors?.['required']">Le nombre d'heures est requis</mat-error>
+          </mat-form-field>
+        </div>
 
-      <!-- Niveau de classe -->
-      <div>
-        <mat-form-field class="custom-input-width">
-          <mat-label>Choisir le niveau</mat-label>
-          <mat-select formControlName="selectedClasses" (selectionChange)="onClassSelection($event)" multiple>
-            <mat-option *ngFor="let class of classes" [value]="class.id">{{ class.level }}</mat-option>
-          </mat-select>
-          <mat-error *ngIf="matiereForm.get('selectedClasses')?.errors?.['required']">Au moins une classe est requise</mat-error>
-        </mat-form-field>
-      </div>
+        <!-- Type -->
+        <div>
+          <mat-form-field class="custom-input-width">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+              <mat-option value="Obligatoire">Obligatoire</mat-option>
+              <mat-option value="Optionnel">Optionnel</mat-option>
+            </mat-select>
+            <mat-error *ngIf="matiereForm.get('type')?.hasError('required')">Le type est requis</mat-error>
+          </mat-form-field>
+        </div>
 
-      <!-- Submit Button -->
-      <button type="submit" pButton label="Ajouter" [disabled]="!matiereForm.valid">Ajouter</button>
-    </form>
+        <!-- Classes associées -->
+        <div>
+          <mat-form-field class="custom-input-width">
+            <mat-label>Classes concernées</mat-label>
+            <mat-select formControlName="selectedClasses" multiple>
+              <mat-option *ngFor="let class of classes" [value]="class.id">{{ class.level }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" pButton label="Ajouter" [disabled]="!matiereForm.valid">Ajouter</button>
+      </form>
+    </div>
   </div>
 </div>

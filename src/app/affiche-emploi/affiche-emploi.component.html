@@ -1,6 +1,12 @@
 <mat-card class="emploi-container">
   <mat-card-title>📅 Emploi du Temps</mat-card-title>
 
+  <!-- Bouton Retour ajouté ici -->
+  <button mat-stroked-button color="primary" (click)="goBack()" class="back-button">
+    <mat-icon>arrow_back</mat-icon>
+    Retour au formulaire
+  </button>
+
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>Sélectionnez une classe</mat-label>
     <input matInput [(ngModel)]="selectedClass" placeholder="Ex: c1">
@@ -12,8 +18,7 @@
 
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
 
-  <table mat-table class="mat-elevation-z8" [dataSource]="hours" *ngIf="hours.length > 0 && classefound"  id="timetable-table">>
-
+  <table mat-table class="mat-elevation-z8" [dataSource]="hours" *ngIf="hours.length > 0 && classefound" id="timetable-table">
     <!-- Colonne des heures -->
     <ng-container matColumnDef="hour">
       <th mat-header-cell *matHeaderCellDef> Heure </th>
@@ -45,5 +50,11 @@
     <!-- Lignes -->
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-  <button *ngIf="hours.length > 0 && classefound "  mat-raised-button color="accent"  (click)="downloadPDF()">Imprimer en PDF</button>
+
+  <div class="action-buttons" *ngIf="hours.length > 0 && classefound">
+    <button mat-raised-button color="accent" (click)="downloadPDF()">
+      <mat-icon>picture_as_pdf</mat-icon>
+      Imprimer en PDF
+    </button>
+  </div>
 </mat-card>

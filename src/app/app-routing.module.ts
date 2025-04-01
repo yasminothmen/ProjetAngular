@@ -7,7 +7,7 @@ import {HeaderfooterComponent} from "./headerfooter/headerfooter.component";
 import { ElevesComponent } from './eleves/eleves.component';
 import { ListelevesComponent } from './listeleves/listeleves.component';
 import { MatiereComponent } from './matieres/matieres.component';
-import { ListematieresComponent } from './listematieres/listematieres.component'; // Assurez-vous du bon chemin
+import { ListematieresComponent } from './listematieres/listematieres.component';
 import { EnseignantsComponent } from './enseignants/enseignants.component';
 import { ListeenseignantsComponent } from './listeenseignants/listeenseignants.component';
 import { EmploiComponent } from './emploi/emploi.component';
@@ -16,42 +16,39 @@ import { LoginComponent } from './login/login.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { authenticatedGuard, notAuthenticatedGuard, verifyEmailGuard } from './guards/authenticated.guard';
+import { TeacherScheduleComponent } from './teacher-schedule/teacher-schedule.component';
 
 const routes: Routes = [
-  { path:'acceuil',
-    component : HeaderfooterComponent,
-    children:[
-      {path:'classe', component:ClassesComponent},
-      {path:'classeslist',component:ListeclassesComponent},
-      {path:'classe/:id',component:ClassedetailsComponent},
-            //******************* */
-      {path:'eleves',component:ElevesComponent},
-      {path:'elevesList',component:ListelevesComponent},
-      /************************** */
-      {path:'matieres',component:MatiereComponent},
-      {path:'listematieres',component:ListematieresComponent},
-
-      //**************************************** */
+  { 
+    path: 'acceuil',
+    component: HeaderfooterComponent,
+    children: [
+      { path: 'classe', component: ClassesComponent },
+      { path: 'classeslist', component: ListeclassesComponent },
+      { path: 'classe/:id', component: ClassedetailsComponent },
+      { path: 'eleves', component: ElevesComponent },
+      { path: 'elevesList', component: ListelevesComponent },
+      { path: 'matieres', component: MatiereComponent },
+      { path: 'listematieres', component: ListematieresComponent },
       { path: 'enseignants', component: EnseignantsComponent },
-      { path: 'listeenseignants',component:ListeenseignantsComponent},
-
-      // ********************************************
+      { path: 'listeenseignants', component: ListeenseignantsComponent },
       { path: 'emploie', component: EmploiComponent },
       { path: 'afficheEmploie', component: EmploiAffichageComponent },
-
-      // ***********************************************/
-      
-      { path: 'dashboard', component: DashboardComponent, canActivate: [authenticatedGuard]},
-    ]},
-
-    { path: '', redirectTo: '/acceuil/classeslist', pathMatch: 'full' },
-    {path: 'login', component : LoginComponent, canActivate: [notAuthenticatedGuard]},
-    {path: 'verify-email', component : VerifyEmailComponent, canActivate: [verifyEmailGuard]},
-   
-  ];
+      { 
+        path: 'dashboard', 
+        component: DashboardComponent, 
+        canActivate: [authenticatedGuard] // Correction: "canActivate" au lieu de "canActivate"
+      },
+      { path: 'TeacherSchedule', component: TeacherScheduleComponent }
+    ]
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent, canActivate: [notAuthenticatedGuard] },
+  { path: 'verify-email', component: VerifyEmailComponent, canActivate: [verifyEmailGuard] }, // Note: Ici aussi il faudrait corriger en "canActivate"
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

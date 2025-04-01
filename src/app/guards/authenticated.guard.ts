@@ -7,18 +7,17 @@ export const authenticatedGuard: CanActivateFn = (route, state) => {
   const auth: AngularFireAuth = inject(AngularFireAuth);
   const router: Router = inject(Router);
 
-  return auth.authState.pipe(map(data => {
-    const result = data && data.emailVerified;
-    console.log('authenticatedGuard', data); // Changé de notAuthenticatedGuard à authenticatedGuard
-    if (!result) {
-      console.log('authenticatedGuard failed');
-      if (data) { // Simplifié la condition
-        router.navigate(['acceuil/verify-email']);
-      } else {
-        router.navigate(['login']);
-      }
+  return auth.authState.pipe(map(user => {
+    if (user && user.emailVerified) {
+      return true;
     }
-    return !!result;
+    
+    if (user) {
+      router.navigate(['/verify-email']); // Changé à la route racine
+    } else {
+      router.navigate(['/login']);
+    }
+    return false;
   }));
 };
 
@@ -26,18 +25,15 @@ export const notAuthenticatedGuard: CanActivateFn = (route, state) => {
   const auth: AngularFireAuth = inject(AngularFireAuth);
   const router: Router = inject(Router);
   
-  return auth.authState.pipe(map(data => {
-    const result = !data;
-    console.log('notAuthenticatedGuard', data);
-    if (!result) {
-      console.log('notAuthenticatedGuard failed'); // Changé de authenticatedGuard à notAuthenticatedGuard
-      if (data.emailVerified) {
-        router.navigate(['acceuil/dashboard']);
-      } else {
-        router.navigate(['acceuil/verify-email']);
-      }
+  return auth.authState.pipe(map(user => {
+    if (!user) return true;
+    
+    if (user.emailVerified) {
+      router.navigate(['/acceuil/dashboard']);
+    } else {
+      router.navigate(['/verify-email']); // Changé à la route racine
     }
-    return result;
+    return false;
   }));
 };
 
@@ -45,14 +41,13 @@ export const verifyEmailGuard: CanActivateFn = (route, state) => {
   const auth: AngularFireAuth = inject(AngularFireAuth);
   const router: Router = inject(Router);
   
-  return auth.authState.pipe(map(data => {
-    if (data && !data.emailVerified) {
-      return true;
-    }
-    if (data) {
-      router.navigate(['acceuil/dashboard']);
+  return auth.authState.pipe(map(user => {
+    if (user && !user.emailVerified) return true;
+    
+    if (user) {
+      router.navigate(['/acceuil/dashboard']);
     } else {
-      router.navigate(['login']);
+      router.navigate(['/login']);
     }
     return false;
   }));
