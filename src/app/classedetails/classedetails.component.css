@@ -76,8 +76,39 @@
     padding: 1rem;
     margin: 1rem;
   }
+
   
   .class-info p strong {
     width: 100px;
   }
+  
+}
+
+.btn-retour {
+  background-color: #3b82f6; /* 🔵 Bleu clair */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 10;
+}
+
+.btn-retour:hover {
+  transform: translateY(-2px);
+  background-color: #60a5fa; /* 🔵 Bleu un peu plus clair au hover */
+}
+
+.btn-retour:disabled {
+  background: #cccccc; /* 🔘 Gris pour bouton désactivé */
+  cursor: not-allowed;
+  transform: none;
 }

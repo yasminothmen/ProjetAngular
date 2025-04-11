@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Teacher } from '../models/teacher'; // Importer Teacher
 import { Observable } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -45,9 +46,17 @@ export class UserService {
   }
 
   // Supprimer un utilisateur par ID
-  deleteUser(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
+ // Dans user.service.ts
+deleteUser(id: string): Observable<void> {
+  // Encoder l'ID pour gérer les caractères spéciaux
+  const encodedId = encodeURIComponent(id);
+  return this.http.delete<void>(`${this.apiUrl}/${encodedId}`).pipe(
+    catchError(error => {
+      console.error('Erreur suppression:', error);
+      throw 'Erreur lors de la suppression de l\'utilisateur';
+    })
+  );
+}
 
   // Ajouter une liste d'utilisateurs
   addListUsers(users: User[]): Observable<User[]> {
@@ -68,4 +77,7 @@ export class UserService {
   getUserByUsername(username: string): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/username/${username}`);
   }
+  
+  
+    
 }

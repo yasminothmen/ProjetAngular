@@ -1,5 +1,11 @@
-<p>verify-email works!</p>
-
-<button (click)="logout()">Logout</button>
-
-<button (click)="sendVerifyEmail()">Verify Email</button>
+<div class="verify-email-container">
+    <div class="verify-email-card">
+        <h2>Vérification d'email</h2>
+        <p>Un lien de vérification a été envoyé à votre adresse email.</p>
+        
+        <div class="verify-email-buttons">
+            <button (click)="sendVerifyEmail()">Renvoyer</button>
+            <button (click)="logout()">Déconnexion</button>
+        </div>
+    </div>
+</div>

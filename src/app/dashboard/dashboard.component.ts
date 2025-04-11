@@ -16,9 +16,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     totalSubjects: 0,
     totalClasses: 0,
     totalSchedules: 0,
-    activeTeachers: 0, // Ajouté pour correspondre au template
-    activeClasses: 0,  // Ajouté pour correspondre au template
-    fillRate: 0        // Ajouté pour correspondre au template
+    activeTeachers: 0, 
+    activeClasses: 0,  
   };
   isLoading = true;
   errorMessage: string | null = null;

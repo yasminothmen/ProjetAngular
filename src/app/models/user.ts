@@ -4,8 +4,9 @@ export class User {
   lastname: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  //confirmPassword: string;
   username: string;
+  firebaseUid:string;
   role: string; // Ajout du rôle
 
 
@@ -15,8 +16,9 @@ export class User {
     this.lastname = '';
     this.email = '';
     this.password = '';
-    this.confirmPassword = '';
+    //this.confirmPassword = '';
     this.username = '';
+    this.firebaseUid='';
     this.role = ''; // Initialisation du rôle
 
   }

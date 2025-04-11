@@ -13,7 +13,7 @@ export const authenticatedGuard: CanActivateFn = (route, state) => {
     }
     
     if (user) {
-      router.navigate(['/verify-email']); // Changé à la route racine
+      router.navigate(['/verify-email']); 
     } else {
       router.navigate(['/login']);
     }

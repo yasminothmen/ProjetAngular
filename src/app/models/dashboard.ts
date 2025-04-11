@@ -7,5 +7,4 @@ export interface DashboardStats {
     totalSchedules: number;
     activeTeachers: number;  // Ajoutez cette ligne
     activeClasses: number;   // Ajoutez cette ligne
-    fillRate: number;        // Ajoutez cette ligne
   }

@@ -1,0 +1,172 @@
+/* student-edit-modal.component.css */
+.modal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: #0a192f;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+  }
+  
+  .modal-container::before {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    top: -100%;
+    left: -100%;
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(10, 50, 100, 0.8) 0%, transparent 25%),
+      radial-gradient(circle at 70% 70%, rgba(20, 80, 120, 0.6) 0%, transparent 25%);
+    animation: bg-move 60s linear infinite;
+    z-index: -1;
+  }
+  
+  @keyframes bg-move {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .modal-card {
+    width: 100%;
+    max-width: 500px;
+    background: #172a45;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid #1e3a8a;
+    overflow: hidden;
+    animation: modalFadeIn 0.4s ease-out;
+  }
+  
+  @keyframes modalFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .card-header {
+    padding: 1.5rem 2rem;
+    text-align: center;
+    background: #1a365d;
+    color: white;
+    border-bottom: 1px solid #1e3a8a;
+  }
+  
+  .card-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #f8fafc;
+  }
+  
+  .card-header p {
+    margin: 0.5rem 0 0;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    color: #e2e8f0;
+  }
+  
+  .modal-form {
+    padding: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group mat-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #f8fafc;
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid #1e3a8a;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: white;
+    background: rgba(30, 58, 138, 0.6);
+    transition: all 0.3s ease;
+  }
+  
+  .form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  
+  .submit-btn {
+    flex: 1;
+    padding: 1rem;
+    background: #1d4ed8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .submit-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+  }
+  
+  .submit-btn:disabled {
+    background: #64748b;
+    transform: none;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+  
+  .cancel-btn {
+    flex: 1;
+    padding: 1rem;
+    background: transparent;
+    color: #f8fafc;
+    border: 1px solid #64748b;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .cancel-btn:hover {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+  
+  /* Responsive */
+  @media (max-width: 600px) {
+    .modal-card {
+      margin: 0 1.5rem;
+    }
+    
+    .card-header, .modal-form {
+      padding: 1.5rem;
+    }
+    
+    .button-group {
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+  }

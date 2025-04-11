@@ -1,26 +1,40 @@
 <!-- teacher-edit-modal.component.html -->
-<h2>Modifier l'enseignant</h2>
-<form [formGroup]="editTeacherForm" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>Prénom</mat-label>
-    <input matInput formControlName="firstname" required>
-  </mat-form-field>
+<div class="modal-container">
+  <div class="modal-card">
+    <div class="card-header">
+      <h2>Modifier l'enseignant</h2>
+      <p>Mettez à jour les informations du professeur</p>
+    </div>
 
-  <mat-form-field>
-    <mat-label>Nom</mat-label>
-    <input matInput formControlName="lastname" required>
-  </mat-form-field>
+    <form [formGroup]="editTeacherForm" (ngSubmit)="onSubmit()" class="modal-form">
+      <div class="form-group">
+        <mat-label>Prénom</mat-label>
+        <input matInput formControlName="firstname" required class="form-control">
+      </div>
 
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email" required>
-  </mat-form-field>
+      <div class="form-group">
+        <mat-label>Nom</mat-label>
+        <input matInput formControlName="lastname" required class="form-control">
+      </div>
 
-  <mat-form-field>
-    <mat-label>Matières enseignées</mat-label>
-    <input matInput formControlName="matieresEnseignees" required>
-  </mat-form-field>
+      <div class="form-group">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required class="form-control">
+      </div>
 
-  <button type="submit" [disabled]="editTeacherForm.invalid" class="btn-enregistrer">Enregistrer</button>
-  <button mat-raised-button color="warn" type="button" (click)="cancelEdit()">Annuler</button>
-</form>
+      <div class="form-group">
+        <mat-label>Matières enseignées</mat-label>
+        <input matInput formControlName="matieresEnseignees" required class="form-control">
+      </div>
+
+      <div class="button-group">
+        <button type="submit" [disabled]="editTeacherForm.invalid" class="submit-btn">
+          Enregistrer
+        </button>
+        <button type="button" (click)="cancelEdit()" class="cancel-btn">
+          Annuler
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

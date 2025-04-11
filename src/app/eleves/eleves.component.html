@@ -54,8 +54,11 @@
         <!-- Mot de passe -->
         <mat-form-field class="custom-input-width">
           <mat-label>Mot de passe</mat-label>
-          <input matInput formControlName="password" type="password" placeholder="Créez un mot de passe">
+          <input matInput formControlName="password" type="text" placeholder="Créez un mot de passe">
           <mat-error *ngIf="eleveForm.get('password')?.errors?.['required']">Mot de passe requis</mat-error>
+          <mat-error *ngIf="eleveForm.get('password')?.errors?.['minlength']">
+            Le mot de passe doit contenir au moins 6 caractères
+          </mat-error>
         </mat-form-field>
 
         <!-- Submit Button -->

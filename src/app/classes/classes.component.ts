@@ -40,7 +40,7 @@ export class ClassesComponent  implements OnInit{
   }
 
   loadUsers(): void {
-    this.userService.getStudents().subscribe({
+    this.classService.getAvailableStudents().subscribe({
       next: (users) => {
         this.users = users;
       },

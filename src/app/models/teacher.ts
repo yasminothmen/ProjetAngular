@@ -8,7 +8,7 @@ export class Teacher extends User {
     lastname: string,
     username: string,
     password: string,
-    confirmPassword: string,
+    //confirmPassword: string,
     email: string,
     matieresEnseignees: string[] = [] // Liste des matières enseignées
   ) {
@@ -17,7 +17,7 @@ export class Teacher extends User {
     this.lastname = lastname;
     this.username = username;
     this.password = password;
-    this.confirmPassword = confirmPassword;
+    //this.confirmPassword = confirmPassword;
     this.email = email;
     this.role = 'teacher'; // Définir le rôle comme "teacher"
     this.matieresEnseignees = matieresEnseignees; // Initialiser les matières enseignées

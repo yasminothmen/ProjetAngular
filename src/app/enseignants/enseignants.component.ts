@@ -2,13 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { MatiereService } from '../services/matiere.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth'; // Import Firebase Auth
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import Swal from 'sweetalert2';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { BooleanInput } from '@angular/cdk/coercion';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
+
+function emailDomainValidator(domain: string): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    const email = control.value;
+    if (email && !email.endsWith(`@${domain}`)) {
+      return { 'invalidDomain': true };
+    }
+    return null;
+  };
+}
 @Component({
   selector: 'app-enseignants',
   templateUrl: './enseignants.component.html',
@@ -25,24 +36,23 @@ export class EnseignantsComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private matiereService: MatiereService,
-    private afAuth: AngularFireAuth, // Injection du service Firebase Auth
+    private afAuth: AngularFireAuth,
     private router: Router
   ) {
-    // Initialisation du formulaire
     this.enseignantForm = this.fb.group({
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, emailDomainValidator('enseignant.com')]],
       matieresEnseignees: [[], Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
+  
 
   ngOnInit(): void {
     this.loadMatieres();
   }
 
-  // Charge la liste des matières disponibles
   private loadMatieres(): void {
     this.matiereService.getAllSubjects().subscribe(
       (data: any[]) => {
@@ -55,20 +65,23 @@ export class EnseignantsComponent implements OnInit {
     );
   }
 
-  // Soumission du formulaire
   async onSubmit() {
     if (this.enseignantForm.valid) {
       try {
         const formData = this.enseignantForm.value;
         
-        // Étape 1: Création du compte Firebase
+        // Étape 1: Création du compte Firebase (mot de passe stocké ici)
         const firebaseUser = await this.createFirebaseAccount(formData.email, formData.password);
         
-        // Étape 2: Préparation des données pour MongoDB
+        // Étape 2: Préparation des données pour MongoDB (sans le mot de passe)
         const teacherData = {
-          ...formData,
-          firebaseUid: firebaseUser.uid, // Stockage de l'UID Firebase
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          email: formData.email,
+          matieresEnseignees: formData.matieresEnseignees,
+          firebaseUid: firebaseUser.uid, // Lien avec le compte Firebase
           role: 'teacher'
+          // Le mot de passe n'est pas inclus ici
         };
 
         // Étape 3: Enregistrement dans MongoDB
@@ -84,7 +97,6 @@ export class EnseignantsComponent implements OnInit {
     }
   }
 
-  // Crée un compte Firebase avec email/mot de passe
   private async createFirebaseAccount(email: string, password: string): Promise<any> {
     try {
       const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
@@ -95,7 +107,6 @@ export class EnseignantsComponent implements OnInit {
     }
   }
 
-  // Enregistre l'enseignant dans MongoDB
   private saveTeacherToMongoDB(teacherData: any): Promise<void> {
     return new Promise((resolve, reject) => {
       this.userService.addTeacher(teacherData).subscribe(
@@ -105,7 +116,6 @@ export class EnseignantsComponent implements OnInit {
     });
   }
 
-  // Gère les erreurs Firebase
   private getFirebaseErrorMessage(error: any): string {
     switch (error.code) {
       case 'auth/email-already-in-use':
@@ -119,21 +129,18 @@ export class EnseignantsComponent implements OnInit {
     }
   }
 
-  // Affiche une notification de succès
   private showSuccessAlert(): void {
     Swal.fire({
       icon: 'success',
       title: 'Succès',
-      text: 'Enseignant créé avec succès dans Firebase et MongoDB',
+      text: 'Enseignant créé avec succès',
     });
   }
 
-  // Redirige vers la liste des enseignants
   private redirectToTeacherList(): void {
     this.router.navigate(['acceuil/listeenseignants']);
   }
 
-  // Gère les erreurs globales
   private handleError(error: any): void {
     console.error('Erreur:', error);
     this.error = error.message || 'Une erreur est survenue';
@@ -144,12 +151,10 @@ export class EnseignantsComponent implements OnInit {
     });
   }
 
-  // Gestion de la sélection des matières
   onSubjectSelection(event: MatSelectChange): void {
     console.log('Matières sélectionnées:', event.value);
   }
 
-  // Méthode pour le toggle (à implémenter si nécessaire)
   toggleMultiple($event: MatCheckboxChange): void {
     this.isMultiple = $event.checked;
   }

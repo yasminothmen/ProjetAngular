@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { StudentEditModalComponent } from '../student-edit-modal/student-edit-modal.component';
 
 @Component({
   selector: 'app-liste-eleves',
@@ -18,11 +20,10 @@ export class ListelevesComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userservice: UserService) {}
-
-  // ngOnInit() {
-  //   this.loadEleves();
-  // }
+  constructor(
+    private userservice: UserService,
+    private dialog: MatDialog
+  ) {}
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -38,7 +39,6 @@ export class ListelevesComponent implements OnInit {
   ngOnInit() {
     this.loadEleves();
 
-    // Personnalisation du filtrage : filtrer uniquement sur le prénom et le nom
     this.dataSource.filterPredicate = (data: any, filter: string) => {
       const filterText = filter.trim().toLowerCase();
       return data.firstname.toLowerCase().includes(filterText) || 
@@ -50,14 +50,30 @@ export class ListelevesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-  
 
   editStudent(student: User) {
-    console.log("Modifier l'élève :", student);
-    // Ajouter la logique pour modifier l'élève
+    const dialogRef = this.dialog.open(StudentEditModalComponent, {
+      width: '600px',
+      data: { student }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userservice.updateUser(result.id, result).subscribe({
+          next: () => {
+            Swal.fire('Succès', 'L\'élève a été modifié avec succès', 'success');
+            this.loadEleves();
+          },
+          error: (error) => {
+            Swal.fire('Erreur', 'Une erreur s\'est produite lors de la modification', 'error');
+            console.error(error);
+          }
+        });
+      }
+    });
   }
 
-  deleteStudent(id: string): void{
+  deleteStudent(id: string): void {
     Swal.fire({
       title: 'Êtes-vous sûr ?',
       text: "Vous ne pourrez pas revenir en arrière !",
@@ -65,32 +81,19 @@ export class ListelevesComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Oui, supprimer!',
       cancelButtonText: 'Annuler'
-    }).then((result)=>{
-      if (result.isConfirmed){
+    }).then((result) => {
+      if (result.isConfirmed) {
         this.userservice.deleteUser(id).subscribe({ 
-          next:()=>{
-            Swal.fire(
-                          'Supprimé!',
-                          'L\'élève a été supprimée.',
-                          'success'
-                        );
-                        this.loadEleves(); // Rafraîchir la liste après suppression
-
-
+          next: () => {
+            Swal.fire('Supprimé!', 'L\'élève a été supprimé.', 'success');
+            this.loadEleves();
           },
-           error: (error) => {
-                      Swal.fire(
-                        'Erreur!',
-                        'Une erreur s\'est produite lors de la suppression de la classe.',
-                        'error'
-                      );
-                      console.error(error);
-
-
-
-
-      },
+          error: (error) => {
+            Swal.fire('Erreur!', 'Une erreur s\'est produite lors de la suppression', 'error');
+            console.error(error);
+          }
+        });
+      }
     });
   }
-  });
-}}
+}

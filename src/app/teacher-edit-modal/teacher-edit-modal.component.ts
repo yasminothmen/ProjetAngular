@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-teacher-edit-modal',
   templateUrl: './teacher-edit-modal.component.html',
-  styleUrls: ['./teacher-edit-modal.component.css']
+  styleUrls: ['./teacher-edit-modal.component.scss']
 })
 export class TeacherEditModalComponent {
   editTeacherForm: FormGroup;

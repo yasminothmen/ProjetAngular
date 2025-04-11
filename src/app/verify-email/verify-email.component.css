@@ -1,0 +1,66 @@
+.verify-email-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: linear-gradient(135deg, #0a192f 0%, #1a365d 100%); /* Dégradé bleu plus prononcé */
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    z-index: 1;
+}
+
+.verify-email-card {
+    background: rgba(23, 42, 69, 0.9); /* Fond légèrement transparent */
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    padding: 2rem;
+    max-width: 450px;
+    width: 100%;
+    border: 1px solid #3b82f6; /* Bordure bleue */
+    backdrop-filter: blur(5px); /* Effet de flou moderne */
+}
+
+.verify-email-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+}
+
+button {
+    padding: 0.6rem 1.2rem; /* Taille réduite */
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 120px; /* Largeur minimale */
+}
+
+button:first-child {
+    background: #3b82f6; /* Bleu vif */
+    color: white;
+}
+
+button:first-child:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(37, 99, 235, 0.3);
+}
+
+button:last-child {
+    background: transparent;
+    color: #93c5fd;
+    border: 1px solid #3b82f6;
+}
+
+button:last-child:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+}

@@ -183,14 +183,51 @@ $card-bg: #172a45;
   }
 }
 
-// Grille de statistiques
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
   margin-top: 2rem;
   position: relative;
   z-index: 1;
+
+  // Définition de la taille de base pour toutes les cartes
+  .stat-card {
+    flex: 0 0 300px; // Taille fixe pour toutes les cartes
+    max-width: 300px; // Empêche l'élargissement
+    box-sizing: border-box;
+  }
+
+  // Pour les écrans larges
+  @media (min-width: 992px) {
+    // Calcul dynamique pour 3 cartes sur la première ligne
+    .stat-card:nth-child(-n+3) {
+      flex: 0 0 calc((100% - 4rem) / 3); // 3 cartes avec 2 gaps
+    }
+    
+    // Calcul dynamique pour 2 cartes sur la deuxième ligne
+    .stat-card:nth-child(n+4) {
+      flex: 0 0 calc((100% - 2rem) / 2); // 2 cartes avec 1 gap
+    }
+  }
+
+  // Pour les petits écrans
+  @media (max-width: 991px) {
+    .stat-card {
+      flex: 0 0 100%; // Pleine largeur sur mobile
+      max-width: 100%;
+    }
+  }
+}
+
+// Ajoutez cette media query pour les petits écrans
+@media (max-width: 991px) {
+  .stats-grid {
+    .stat-card {
+      flex: 0 0 100%; // 1 carte par ligne sur mobile
+    }
+  }
 }
 
 // Cartes de statistiques

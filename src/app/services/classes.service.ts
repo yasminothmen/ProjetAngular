@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Class} from "../models/class";
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,9 @@ export class ClassesService {
   }
   getClassByName(name: string) {
     return this.http.get<Class[]>(`${this.apiUrl}/name/${name}`);
+  }
+  getAvailableStudents() {
+    return this.http.get<User[]>(`${this.apiUrl}/available-students`);
   }
   
 }
