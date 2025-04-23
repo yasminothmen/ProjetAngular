@@ -3,6 +3,8 @@ import { ScheduleService } from '../services/emploie.service';
 import { Schedule, Session } from '../models/emploie';
 import html2pdf from 'html2pdf.js';
 import { Location } from '@angular/common'; // Import ajouté pour le bouton retour
+import{PdfStorageServiceService} from '../services/pdf-storage-service.service'
+
 
 @Component({
   selector: 'app-emploie-affichage',
@@ -30,12 +32,13 @@ export class EmploiAffichageComponent implements OnInit {
     "#6A5ACD", "#FF1493", "#F0E68C", "#D3D3D3", "#B22222", "#5F9EA0", "#7CFC00", "#0000FF", "#FFD700", "#4B0082",
     "#FF7F50", "#8B008B", "#00FA9A", "#228B22", "#B8860B", "#A52A2A", "#800000", "#BC8F8F", "#FF6A6A", "#3CB371"
   ];
-  pdfStorageService: any;
 
   constructor(
     private scheduleService: ScheduleService, 
     private cdr: ChangeDetectorRef,
-    private location: Location // Injection du service Location
+    private location: Location ,
+    private pdfStorageService: PdfStorageServiceService  
+    
   ) {}
 
   ngOnInit(): void {}
@@ -135,35 +138,45 @@ export class EmploiAffichageComponent implements OnInit {
     return this.predefinedColors[index];
   }
 
-  // Modifiez la méthode downloadPDF() dans affiche-emploi.component.ts
-async downloadPDF(): Promise<void> {
-  const element = document.getElementById('timetable-table');
-  const fileName = `Emploi_${this.selectedClass}_${new Date().toISOString().slice(0,10)}.pdf`;
+  async downloadPDF(): Promise<void> {
+    if (!this.selectedClass) {
+      console.error('Aucune classe sélectionnée');
+      return;
+    }
   
-  const options = {
-    margin: 10,
-    filename: fileName,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
-
-  if (element) {
-    await html2pdf().from(element).set(options).save();
+    const element = document.getElementById('timetable-table');
+    const fileName = `Emploi_${this.selectedClass}_${new Date().toISOString().slice(0,10)}.pdf`;
     
-    // Enregistrer l'URL dans la base de données
-    this.pdfStorageService.savePdfInfo(
-      fileName,
-      'class',
-      this.selectedClass
-    ).subscribe({
-      next: (response) => {
-        console.log('PDF info saved:', response);
-      },
-      error: (err) => {
-        console.error('Error saving PDF info:', err);
+    const options = {
+      margin: 10,
+      filename: fileName,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+  
+    if (element) {
+      try {
+        await html2pdf().from(element).set(options).save();
+        
+        // Enregistrer l'URL dans la base de données
+        this.pdfStorageService.savePdfInfo(
+          fileName,
+          'class',
+          this.selectedClass
+        ).subscribe({
+          next: (response) => {
+            console.log('PDF info saved:', response);
+          },
+          error: (err) => {
+            console.error('Error saving PDF info:', err);
+          }
+        });
+      } catch (error) {
+        console.error('Error generating PDF:', error);
       }
-    });
+    } else {
+      console.error('Element not found for PDF generation');
+    }
   }
-}
 }

@@ -1,84 +1,183 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider} from '@angular/fire/auth'
+import { GoogleAuthProvider, GithubAuthProvider, FacebookAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private tokenSubject = new BehaviorSubject<string | null>(null);
+  private userSubject = new BehaviorSubject<any>(null);
 
-  constructor(private fireauth : AngularFireAuth, private router : Router) { }
+  constructor(private fireauth: AngularFireAuth, private router: Router) {
+    // Initialize auth state listener
+    this.fireauth.authState.subscribe(user => {
+      if (user) {
+        user.getIdToken().then(token => {
+          this.setToken(token);
+          this.userSubject.next(user);
+        });
+      } else {
+        this.clearAuthData();
+      }
+    });
+  }
 
-  // login method
-  login(email : string, password : string) {
-    this.fireauth.signInWithEmailAndPassword(email,password).then( res => {
-        localStorage.setItem('token','true');
-        console.log(res.user);
-        if(res.user?.emailVerified == true) {
+  // Current token as observable
+  get currentToken$(): Observable<string | null> {
+    return this.tokenSubject.asObservable();
+  }
+
+  // Current user as observable
+  get currentUser$(): Observable<any> {
+    return this.userSubject.asObservable();
+  }
+
+  // Set authentication data
+  private setToken(token: string): void {
+    localStorage.setItem('jwt_token', token);
+    this.tokenSubject.next(token);
+  }
+
+  // Get stored token
+  getToken(): string | null {
+    return localStorage.getItem('jwt_token');
+  }
+
+  // Clear authentication data
+  private clearAuthData(): void {
+    localStorage.removeItem('jwt_token');
+    localStorage.removeItem('firebase_user');
+    this.tokenSubject.next(null);
+    this.userSubject.next(null);
+  }
+
+  // Login with email/password
+  async login(email: string, password: string): Promise<void> {
+    try {
+      const userCredential = await this.fireauth.signInWithEmailAndPassword(email, password);
+      const token = await userCredential.user?.getIdToken();
+      
+      if (token) {
+        this.setToken(token);
+        localStorage.setItem('firebase_user', JSON.stringify(userCredential.user));
+        
+        if (userCredential.user?.emailVerified) {
           this.router.navigate(['acceuil/dashboard']);
         } else {
           this.router.navigate(['/verify-email']);
         }
-
-    }, err => {
-        alert(err.message);
-        this.router.navigate(['login']);
-    })
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      throw error;
+    }
   }
 
-  // register method
-  register(email : string, password : string) {
-    this.fireauth.createUserWithEmailAndPassword(email, password).then( res => {
-      alert('Registration Successful');
-      this.sendEmailForVarification(res.user);
-      this.router.navigate(['login']);
-    }, err => {
-      alert(err.message);
-      this.router.navigate(['acceuil/register']);
-    })
+  // Register new user
+  async register(email: string, password: string): Promise<void> {
+    try {
+      const userCredential = await this.fireauth.createUserWithEmailAndPassword(email, password);
+      await this.sendEmailVerification(userCredential.user);
+      this.router.navigate(['/verify-email']);
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
   }
 
-  // sign out
-  logout() {
-    return this.fireauth.signOut()
+  // Send email verification
+  async sendEmailVerification(user: any): Promise<void> {
+    try {
+      await user.sendEmailVerification();
+    } catch (error) {
+      console.error('Email verification error:', error);
+      throw error;
+    }
   }
 
-  sendVerifyEmail() {
-    return this.fireauth.currentUser.then(data => {
-      data?.sendEmailVerification().then();
-    })
+  // Password reset
+  async forgotPassword(email: string): Promise<void> {
+    try {
+      await this.fireauth.sendPasswordResetEmail(email);
+      this.router.navigate(['/verify-email']);
+    } catch (error) {
+      console.error('Password reset error:', error);
+      throw error;
+    }
   }
 
-  // forgot password
-  forgotPassword(email : string) {
-      this.fireauth.sendPasswordResetEmail(email).then(() => {
-        this.router.navigate(['acceuil/varify-email']);
-      }, err => {
-        alert('Something went wrong');
-      })
+  // Google authentication
+  async googleSignIn(): Promise<void> {
+    try {
+      const provider = new GoogleAuthProvider();
+      const userCredential = await this.fireauth.signInWithPopup(provider);
+      const token = await userCredential.user?.getIdToken();
+      
+      if (token) {
+        this.setToken(token);
+        this.router.navigate(['acceuil/dashboard']);
+      }
+    } catch (error) {
+      console.error('Google sign-in error:', error);
+      throw error;
+    }
   }
 
-  // email varification
-  sendEmailForVarification(user : any) {
-    console.log(user);
-    user.sendEmailVerification().then((res : any) => {
-      this.router.navigate(['acceuil/varify-email']);
-    }, (err : any) => {
-      alert('Something went wrong. Not able to send mail to your email.')
-    })
+  // Logout
+  async logout(): Promise<void> {
+    try {
+      await this.fireauth.signOut();
+      this.clearAuthData();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
   }
 
-  //sign in with google
-  googleSignIn() {
-    return this.fireauth.signInWithPopup(new GoogleAuthProvider).then(res => {
-
-      this.router.navigate(['acceuil/dashboard']);
-      localStorage.setItem('token',JSON.stringify(res.user?.uid));
-
-    }, err => {
-      alert(err.message);
-    })
+  // Check authentication state
+  isAuthenticated(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.fireauth.onAuthStateChanged(user => {
+        if (user) {
+          user.getIdToken().then(token => {
+            this.setToken(token);
+            resolve(true);
+          });
+        } else {
+          resolve(false);
+        }
+      });
+    });
   }
 
+  // Refresh token
+  async refreshToken(): Promise<string | null> {
+    try {
+      const user = await this.fireauth.currentUser;
+      if (user) {
+        const token = await user.getIdToken(true);
+        this.setToken(token);
+        return token;
+      }
+      return null;
+    } catch (error) {
+      console.error('Token refresh error:', error);
+      throw error;
+    }
+  }
+
+  sendVerifyEmail(): Promise<void> {
+    return this.fireauth.currentUser.then(user => {
+      if (user) {
+        return this.sendEmailVerification(user);
+      } else {
+        throw new Error('Aucun utilisateur connecté');
+      }
+    });
+  }
+  
 }
