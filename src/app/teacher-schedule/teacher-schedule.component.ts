@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../services/emploie.service';
 import html2pdf from 'html2pdf.js';
-import { Location } from '@angular/common'; // Import ajouté
+import { Location } from '@angular/common'; 
+import{PdfStorageServiceService} from '../services/pdf-storage-service.service'
 
 interface TimetableSlot {
   subject: string;
@@ -34,7 +35,9 @@ export class TeacherScheduleComponent implements OnInit {
 
   constructor(
     private scheduleService: ScheduleService,
-    private location: Location // Injection ajoutée
+    private location: Location ,
+    private pdfStorageService: PdfStorageServiceService  
+
   ) {}
 
   ngOnInit(): void {}
@@ -130,20 +133,37 @@ export class TeacherScheduleComponent implements OnInit {
     return Math.abs(hash) % this.predefinedColors.length;
   }
 
-  downloadPDF(): void {
-    const element = document.getElementById('teacher-timetable');
-    const opt = {
-      margin: 10,
-      filename: `Emploi_${this.selectedTeacher}.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+  // Modifiez la méthode downloadPDF() dans teacher-schedule.component.ts
+async downloadPDF(): Promise<void> {
+  const element = document.getElementById('teacher-timetable');
+  const fileName = `Emploi_${this.selectedTeacher}_${new Date().toISOString().slice(0,10)}.pdf`;
+  
+  const opt = {
+    margin: 10,
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
 
-    if (element) {
-      html2pdf().from(element).set(opt).save();
-    }
+  if (element) {
+    await html2pdf().from(element).set(opt).save();
+    
+    // Enregistrer l'URL dans la base de données
+    this.pdfStorageService.savePdfInfo(
+      fileName,
+      'teacher',
+      this.selectedTeacher
+    ).subscribe({
+      next: (response) => {
+        console.log('PDF info saved:', response);
+      },
+      error: (err) => {
+        console.error('Error saving PDF info:', err);
+      }
+    });
   }
+}
 
   getCellStyle(hour: string, day: string): any {
     const session = this.timetable[hour]?.[day];

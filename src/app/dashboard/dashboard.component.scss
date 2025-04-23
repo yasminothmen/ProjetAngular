@@ -194,8 +194,8 @@ $card-bg: #172a45;
 
   // Définition de la taille de base pour toutes les cartes
   .stat-card {
-    flex: 0 0 300px; // Taille fixe pour toutes les cartes
-    max-width: 300px; // Empêche l'élargissement
+    flex: 0 0 250px; // Taille fixe pour toutes les cartes
+    max-width: 250px; // Empêche l'élargissement
     box-sizing: border-box;
   }
 
