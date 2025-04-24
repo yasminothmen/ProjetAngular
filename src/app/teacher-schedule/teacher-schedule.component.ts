@@ -133,7 +133,6 @@ export class TeacherScheduleComponent implements OnInit {
     return Math.abs(hash) % this.predefinedColors.length;
   }
 
-  // Modifiez la méthode downloadPDF() dans teacher-schedule.component.ts
 async downloadPDF(): Promise<void> {
   const element = document.getElementById('teacher-timetable');
   const fileName = `Emploi_${this.selectedTeacher}_${new Date().toISOString().slice(0,10)}.pdf`;
